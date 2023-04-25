@@ -47,6 +47,7 @@ const Hero = () => {
                 src="/assets/slide1.jpg"
                 fill
                 alt="slideshow image"
+                priority
               />
               <figcaption className="leading-tight lg:leading-tight capitalize z-20 w-4/5 font-semibold text-3xl lg:text-7xl text-center text-white absolute top-1/2	left-1/2 -translate-y-1/2 -translate-x-1/2">
                 <span className="leading-9">
@@ -55,7 +56,7 @@ const Hero = () => {
                 <Button
                   text="shop now"
                   icon={<ArrowRightIcon width={18} height={18} />}
-                  classNames="mt-6 m-auto"
+                  className="mt-6 m-auto"
                 />
               </figcaption>
             </figure>
@@ -75,7 +76,7 @@ const Hero = () => {
                 <Button
                   text="shop now"
                   icon={<ArrowRightIcon width={18} height={18} />}
-                  classNames="mt-6 m-auto"
+                  className="mt-6 m-auto"
                 />
               </figcaption>
             </figure>
@@ -95,7 +96,7 @@ const Hero = () => {
                 <Button
                   text="shop now"
                   icon={<ArrowRightIcon width={18} height={18} />}
-                  classNames="mt-6 m-auto"
+                  className="mt-6 m-auto"
                 />
               </figcaption>
             </figure>

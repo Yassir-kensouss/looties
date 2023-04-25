@@ -11,6 +11,7 @@ const Footer = () => {
         <div className="flex lg:flex-row flex-col lg:items-center items-start px-4 lg:p-0">
           <div className="lg:w-2/6 w-full mb-6 lg:mb-0">
             <img
+              alt="test"
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             />
@@ -124,6 +125,7 @@ const Footer = () => {
                 src="/assets/payment-services.png"
                 height="30"
                 width="140"
+                alt="test"
               />
             </div>
           </div>
