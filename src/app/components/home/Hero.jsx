@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
@@ -18,15 +18,25 @@ const Hero = () => {
   const sliderRef = useRef(null);
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
+  const [sliderEnd, setSliderEnd] = useState(false);
+  const [sliderStart, setSliderStart] = useState(false);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slidePrev();
+    setSliderEnd(false);
+    sliderRef.current.swiper.on("reachBeginning", () => {
+      setSliderStart(true);
+    });
   }, []);
 
   const handleNext = useCallback(() => {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slideNext();
+    setSliderStart(false);
+    sliderRef.current.swiper.on("reachEnd", () => {
+      setSliderEnd(true);
+    });
   }, []);
 
   return (
@@ -105,15 +115,21 @@ const Hero = () => {
       </Swiper>
       <div className="absolute top-5 right-5 z-30">
         <button
+          disabled={sliderStart}
           ref={navigationNextRef}
-          className="prev-arrow bg-zinc-50 p-3 rounded-l-lg active:bg-zinc-200 hover:bg-zinc-100 transition border-r-2"
+          className={`${
+            sliderStart ? "opacity-80" : "opacity-100"
+          } prev-arrow bg-zinc-50 p-3 rounded-l-lg active:bg-zinc-200 hover:bg-zinc-100 transition border-r-2`}
           onClick={handlePrev}
         >
           <ChevronLeftIcon width={18} height={18} />
         </button>
         <button
+          disabled={sliderEnd}
           ref={navigationPrevRef}
-          className="next-arrow bg-zinc-50 p-3 rounded-r-lg active:bg-zinc-200 hover:bg-zinc-100 transition"
+          className={`${
+            sliderEnd ? "opacity-80" : "opacity-100"
+          } next-arrow bg-zinc-50 p-3 rounded-r-lg active:bg-zinc-200 hover:bg-zinc-100 transition`}
           onClick={handleNext}
         >
           <ChevronRightIcon width={18} height={18} />
