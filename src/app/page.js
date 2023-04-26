@@ -6,6 +6,7 @@ import Experiences from "./components/home/Experiences";
 import FeaturedProducts from "./components/home/FeaturedProducts";
 import Categories from "./components/home/Categories";
 import CallToAction from "./components/home/CallToAction";
+import Subscribe from "./components/home/Subscribe";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Categories />
       <FeaturedProducts />
       <CallToAction />
+      <Subscribe />
     </main>
   );
 }
