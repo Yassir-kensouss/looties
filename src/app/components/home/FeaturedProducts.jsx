@@ -30,7 +30,7 @@ const FeaturedProducts = () => {
     });
   }, []);
   return (
-    <section className="mt-20">
+    <section className="mt-32">
       <div className="flex items-start justify-between">
         <h2 className="text-3xl text-zinc-800 capitalize font-semibold">
           Featured Products
@@ -58,12 +58,11 @@ const FeaturedProducts = () => {
           </button>
         </div>
       </div>
-      <div className="mt-2">
+      <div className="mt-10">
         <Swiper
           modules={[A11y]}
           spaceBetween={50}
           slidesPerView={isMobile ? 1 : 3}
-          className="mt-14"
           ref={sliderRef}
           navigation={{
             prevEl: ".prev-arrow",

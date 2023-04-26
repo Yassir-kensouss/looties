@@ -4,6 +4,8 @@ import Hero from "./components/home/Hero";
 import Brands from "./components/home/Brands";
 import Experiences from "./components/home/Experiences";
 import FeaturedProducts from "./components/home/FeaturedProducts";
+import Categories from "./components/home/Categories";
+import CallToAction from "./components/home/CallToAction";
 
 export default function Home() {
   return (
@@ -11,7 +13,9 @@ export default function Home() {
       <Hero />
       <Brands />
       <Experiences />
+      <Categories />
       <FeaturedProducts />
+      <CallToAction />
     </main>
   );
 }
