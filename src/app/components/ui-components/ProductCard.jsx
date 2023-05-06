@@ -8,9 +8,10 @@ const ProductCard = props => {
   const { photo, title, price, oldPrice, preview } = props;
   const [mouseEnter, setMouseEnter] = useState(false);
   return (
-    <div
+    <Link
       onMouseEnter={() => setMouseEnter(true)}
       onMouseLeave={() => setMouseEnter(false)}
+      href="/product"
     >
       <div className="relative cursor-pointer">
         <Image src={photo} width={350} height={400} className="rounded-lg" />
@@ -49,7 +50,7 @@ const ProductCard = props => {
           <ShoppingCartIcon width="100%" height={22} />
         </button>
       </div>
-    </div>
+    </Link>
   );
 };
 

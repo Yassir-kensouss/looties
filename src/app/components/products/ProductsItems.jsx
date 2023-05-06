@@ -5,7 +5,7 @@ import Pagination from "../Pagination";
 const ProductsItems = () => {
   return (
     <>
-      <div className="grid grid-cols-3 gap-4 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
         <ProductCard
           photo="/assets/prod_5.jpg"
           preview="/assets/prod_4.jpg"

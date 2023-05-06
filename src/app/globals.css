@@ -10,7 +10,7 @@
 
 @layer components {
   .basic-btn {
-    @apply cursor-pointer w-9 h-9 rounded-full transition ease-in-out hover:bg-zinc-50 hover:opacity-70 flex items-center justify-between;
+    @apply cursor-pointer w-9 h-9 rounded-full transition ease-in-out hover:bg-zinc-50 hover:opacity-70 flex items-center justify-center;
   }
 }
 
