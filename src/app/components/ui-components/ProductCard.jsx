@@ -45,7 +45,7 @@ const ProductCard = props => {
             ) : null}
           </div>
         </div>
-        <button className="rounded-lg text-white bg-gray-700 hover:bg-gray-600 active:bg-gray-800 w-12 h-12 flex items-center justify-center mr-0 lg:mr-6">
+        <button className="rounded-lg text-white bg-gray-700 hover:bg-gray-600 active:bg-gray-800 w-12 h-12 flex items-center justify-center mr-0">
           <ShoppingCartIcon width="100%" height={22} />
         </button>
       </div>

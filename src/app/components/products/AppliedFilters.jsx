@@ -9,8 +9,8 @@ const AppliedFilters = () => {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <p className="text-zinc-800 font-medium text-medium">Applied Filter:</p>
+    <div className="flex items-center gap-2 mt-4">
+      <p className="text-zinc-800 text-medium">Applied Filters:</p>
       {Object.keys(appliedFilters).map(appliedFilter => (
         <div className="flex items-center gap-2 p-2 text-sm capitalize font-semibold text-zinc-600 border border-zinc-300 rounded-2xl w-fit">
           <span>{appliedFilters[appliedFilter]}</span>

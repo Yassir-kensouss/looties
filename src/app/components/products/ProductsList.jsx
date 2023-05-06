@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Listbox } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import AppliedFilters from "./AppliedFilters";
+import ProductsItems from "./ProductsItems";
 
 const people = [
   { id: 1, name: "Date", unavailable: false },
@@ -32,7 +33,7 @@ const ProductsList = () => {
                   />
                 </span>
               </Listbox.Button>
-              <Listbox.Options className="absolute mt-1 w-full p-2 max-h-60 overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="z-10 absolute mt-1 w-full p-2 max-h-60 overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {people.map(person => (
                   <Listbox.Option
                     key={person.id}
@@ -49,6 +50,7 @@ const ProductsList = () => {
         </div>
       </div>
       <AppliedFilters />
+      <ProductsItems />
     </div>
   );
 };
