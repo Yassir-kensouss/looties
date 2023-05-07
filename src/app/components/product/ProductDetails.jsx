@@ -11,7 +11,7 @@ const ProductDetails = () => {
     setQuantity(quantity - 1);
   };
   return (
-    <div className="w-8/12">
+    <div className="w-full lg:w-8/12 ">
       <div className="divide-y">
         <div className="pb-4">
           <h1 className="text-3xl font-semibold">Blazer Jacket</h1>

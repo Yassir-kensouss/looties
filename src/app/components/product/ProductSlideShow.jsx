@@ -4,7 +4,7 @@ import React from "react";
 
 const ProductSlideShow = () => {
   return (
-    <div className="w-1/2">
+    <div className="w-full lg:w-1/2">
       <div className="w-full h-96 relative">
         <Image
           fill

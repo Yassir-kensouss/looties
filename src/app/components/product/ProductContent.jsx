@@ -4,7 +4,7 @@ import ProductDetails from "./ProductDetails";
 
 const ProductContent = () => {
   return (
-    <section className="flex mt-8 gap-10">
+    <section className="flex flex-col lg:flex-row mt-8 gap-10">
       <ProductSlideShow />
       <ProductDetails />
     </section>

@@ -5,7 +5,15 @@ import React from "react";
 const Comment = () => {
   return (
     <div className="flex gap-4 items-start py-3">
-      <div className="relative w-14 h-14 rounded-full">
+      <div
+        style={{
+          width: "3rem",
+          height: "3rem",
+          minHeight: "3rem",
+          minWidth: "3rem",
+        }}
+        className="relative rounded-full"
+      >
         <Image src="/assets/prod_5.jpg" fill className="rounded-full" />
       </div>
       <div>
