@@ -1,6 +1,8 @@
 import React from "react";
 import BreadCrumbs from "../components/ui-components/BreadCrumbs";
 import ProductContent from "../components/product/ProductContent";
+import ProductMoreDetails from "../components/product/ProductMoreDetails";
+import FeaturedProducts from "../components/home/FeaturedProducts";
 
 const crumbs = [
   { link: "/", label: "Home" },
@@ -10,9 +12,13 @@ const crumbs = [
 
 const Product = () => {
   return (
-    <main className="mx-auto gap-5 max-w-7xl p-6 lg:px-8">
+    <main className="mx-auto max-w-7xl p-6 lg:px-8">
       <BreadCrumbs crumbs={crumbs} />
       <ProductContent />
+      <ProductMoreDetails />
+      <div className="mb-8">
+        <FeaturedProducts />
+      </div>
     </main>
   );
 };

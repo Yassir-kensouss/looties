@@ -1,7 +1,9 @@
+"use client";
 import React, { useCallback, useRef, useState } from "react";
 import ProductCard from "../ui-components/ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y } from "swiper";
+import "swiper/css";
 import { isMobile } from "react-device-detect";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 
