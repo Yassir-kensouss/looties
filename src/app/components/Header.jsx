@@ -141,9 +141,9 @@ const Header = () => {
         </Popover.Group>
         <div className="flex items-center gap-6 hidden lg:flex lg:flex-1 lg:justify-end">
           <SearchInput />
-          <div className="basic-btn">
+          <Link href="/cart" className="basic-btn">
             <ShoppingCartIcon width="100%" height={20} />
-          </div>
+          </Link>
           <Link href="/profile" className="basic-btn">
             <UserIcon width="100%" height={19} />
           </Link>
