@@ -1,6 +1,9 @@
+"use client";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import Quantity from "../ui-components/Quantity";
+import CartTableItems from "./CartTableItems";
 
 const CartTable = () => {
   return (
@@ -12,17 +15,17 @@ const CartTable = () => {
           Remove
         </button>
       </div>
-      <div className="mt-8" role="table">
+      <div className="mt-8 h-96 overflow-auto" role="table">
         <div
           role="table row"
-          className="flex items-center gap-4 py-4 border-b-2 border-b-zinc-100"
+          className="flex items-center gap-4 py-4 border-b-2 border-b-zinc-100 sticky top-0 bg-white z-10"
         >
           <div
             role="table head"
             style={{ width: "5%" }}
             className="flex items-center"
           >
-            <input type="checkbox" className="border-2 checkbox checkbox-xs" />
+            <input type="checkbox" className="border-2 checkbox checkbox-sm" />
           </div>
           <div role="table head" style={{ width: "65%" }}>
             <p className="uppercase text-xs text-zinc-400 font-semibold">
@@ -40,36 +43,8 @@ const CartTable = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-4 py-4 border-b-2 border-b-zinc-100">
-          <div
-            role="table head"
-            style={{ width: "5%" }}
-            className="flex items-center"
-          >
-            <input type="checkbox" className="border-2 checkbox checkbox-xs" />
-          </div>
-          <div role="table head" style={{ width: "65%" }}>
-            <div className="flex items-start gap-4">
-              <div className="w-20 h-20 relative">
-                <Image src="/assets/prod_3.jpg" fill className="rounded-lg" />
-              </div>
-              <div>
-                <h5 className="text-md mb-1 text-gray-800 font-medium">
-                  Grisqui Suit{" "}
-                </h5>
-                <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium">
-                  <span>Green</span> |<span>M</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div role="table head" style={{ width: "15%" }}>
-            <p className="text-sm text-zinc-600 font-semibold">3</p>
-          </div>
-          <div role="table head" style={{ width: "15%" }}>
-            <p className="text-sm text-zinc-600 font-semibold">$250</p>
-          </div>
-        </div>
+        <CartTableItems />
+        <CartTableItems />
       </div>
     </div>
   );
