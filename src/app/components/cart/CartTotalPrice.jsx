@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const CartTotalPrice = () => {
@@ -29,9 +30,12 @@ const CartTotalPrice = () => {
               </div>
             </li>
           </ul>
-          <button className="w-full transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white">
+          <Link
+            href="/checkout"
+            className="w-full block text-center transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white"
+          >
             Checkout now
-          </button>
+          </Link>
         </div>
       </div>
     </div>
