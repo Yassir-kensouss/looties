@@ -1,11 +1,18 @@
 "use client";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Quantity from "../ui-components/Quantity";
 import CartTableItems from "./CartTableItems";
 
 const CartTable = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cart"));
+    setItems(cartItems);
+  }, []);
+
   return (
     <div className="w-full lg:w-4/6">
       <div className="flex items-center justify-between">
@@ -43,8 +50,9 @@ const CartTable = () => {
             </p>
           </div>
         </div>
-        <CartTableItems />
-        <CartTableItems />
+        {items.map(item => (
+          <CartTableItems item={item} />
+        ))}
       </div>
     </div>
   );

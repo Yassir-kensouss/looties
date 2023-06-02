@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Quantity from "../ui-components/Quantity";
 import Image from "next/image";
 
-const CartTableItems = () => {
+const CartTableItems = ({ item }) => {
   const [quantity, setQuantity] = useState(1);
   return (
     <>
@@ -19,14 +19,15 @@ const CartTableItems = () => {
           <div className="flex items-start gap-4 w-full">
             <div className="w-20 h-20 relative">
               <Image
-                src="/assets/prod_3.jpg"
+                src={item.photos[0]?.url}
+                alt={item.name}
                 fill
                 className="rounded-lg object-cover"
               />
             </div>
             <div>
               <h5 className="text-md mb-1 text-gray-800 font-medium w-52 text-ellipsis whitespace-nowrap overflow-hidden">
-                Grisqui Suit
+                {item.name}
               </h5>
               <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium">
                 <span>Green</span> |<span>M</span>
@@ -38,7 +39,7 @@ const CartTableItems = () => {
           <Quantity quantity={quantity} setQuantity={setQuantity} />
         </div>
         <div role="table head" style={{ width: "15%" }}>
-          <p className="text-sm text-zinc-600 font-semibold">$250</p>
+          <p className="text-sm text-zinc-600 font-semibold">${item.price}</p>
         </div>
       </div>
     </>
