@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
@@ -20,6 +20,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import SearchInput from "./inputs/SearchInput";
+import { AppContext } from "../layout";
 
 const products = [
   {
@@ -34,11 +35,9 @@ const callsToAction = [
   { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const Header = () => {
+  const { cartItems } = useContext(AppContext);
+
   return (
     <header className="bg-white fixed top-0 left-0 w-full z-50">
       <nav
@@ -141,11 +140,23 @@ const Header = () => {
         </Popover.Group>
         <div className="flex items-center gap-6 hidden lg:flex lg:flex-1 lg:justify-end">
           <SearchInput />
-          <Link href="/cart" className="basic-btn">
-            <ShoppingCartIcon width="100%" height={20} />
+          <Link
+            href="/cart"
+            className="relative basic-btn"
+            aria-label="shopping cart"
+          >
+            {cartItems?.length > 0 ? (
+              <div
+                aria-label="shopping cart badge"
+                className="absolute -top-1 -right-1 rounded-lg w-5 h-5 flex items-center justify-center bg-violet-500 text-white font-semibold text-xs"
+              >
+                {cartItems?.length}
+              </div>
+            ) : null}
+            <ShoppingCartIcon width="100%" height={20} aria-hidden="true" />
           </Link>
-          <Link href="/profile" className="basic-btn">
-            <UserIcon width="100%" height={19} />
+          <Link href="/profile" className="basic-btn" aria-label="profile">
+            <UserIcon width="100%" height={19} aria-hidden="true" />
           </Link>
         </div>
       </nav>

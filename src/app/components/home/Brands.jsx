@@ -44,7 +44,7 @@ const Brands = () => {
           className="mt-14"
         >
           {slides.map(slide => (
-            <SwiperSlide>
+            <SwiperSlide key={slide._id}>
               <Image
                 width={90}
                 height={90}

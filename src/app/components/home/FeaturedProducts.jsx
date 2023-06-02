@@ -6,6 +6,9 @@ import { A11y } from "swiper";
 import "swiper/css";
 import { isMobile } from "react-device-detect";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useQuery } from "react-query";
+import { fetchProducts } from "@/services/services";
+import FeaturedProductsSkeleton from "../ui-components/skeletons/FeaturedProducts";
 
 const FeaturedProducts = () => {
   const sliderRef = useRef(null);
@@ -13,6 +16,15 @@ const FeaturedProducts = () => {
   const navigationNextRef = useRef(null);
   const [sliderEnd, setSliderEnd] = useState(false);
   const [sliderStart, setSliderStart] = useState(false);
+
+  const [products, setProducts] = useState([]);
+
+  const { isLoading } = useQuery("fetch-products", async () => {
+    const response = await fetchProducts();
+    const data = await response.data.products;
+    setProducts(data);
+    return data;
+  });
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -31,6 +43,7 @@ const FeaturedProducts = () => {
       setSliderEnd(true);
     });
   }, []);
+
   return (
     <section className="mt-32">
       <div className="flex items-start justify-between">
@@ -65,57 +78,31 @@ const FeaturedProducts = () => {
           modules={[A11y]}
           spaceBetween={50}
           slidesPerView={isMobile ? 1 : 3}
+          // centeredSlides={true}
           ref={sliderRef}
           navigation={{
             prevEl: ".prev-arrow",
             nextEl: ".next-arrow",
           }}
         >
-          <SwiperSlide>
-            <ProductCard
-              photo="/assets/prod_5.jpg"
-              preview="/assets/prod_4.jpg"
-              title="Summer Vibe T-shirt"
-              price="40"
-              oldPrice="67"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard
-              photo="/assets/prod_4.jpg"
-              preview="/assets/prod_4.jpg"
-              title="Summer Vibe T-shirt"
-              price="40"
-              oldPrice="67"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard
-              photo="/assets/prod_3.jpg"
-              preview="/assets/prod_4.jpg"
-              title="Summer Vibe T-shirt"
-              price="40"
-              oldPrice="67"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard
-              photo="/assets/prod_4.jpg"
-              preview="/assets/prod_4.jpg"
-              title="Summer Vibe T-shirt"
-              price="40"
-              oldPrice="67"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <ProductCard
-              photo="/assets/prod_5.jpg"
-              preview="/assets/prod_4.jpg"
-              title="Summer Vibe T-shirt"
-              price="40"
-              oldPrice="67"
-            />
-          </SwiperSlide>
+          {isLoading ? (
+            <FeaturedProductsSkeleton />
+          ) : (
+            <>
+              {products.map(product => (
+                <SwiperSlide key={product._id}>
+                  <ProductCard
+                    photo={product.photos[0].url}
+                    preview={product.photos[1]?.url}
+                    title={product.name}
+                    price={product.price}
+                    oldPrice={product.oldPrice}
+                    product={product}
+                  />
+                </SwiperSlide>
+              ))}
+            </>
+          )}
           <div className="swiper-scrollbar"></div>
         </Swiper>
       </div>

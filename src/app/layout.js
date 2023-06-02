@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { createContext, useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,16 +14,30 @@ export const metadata = {
 };
 
 const queryClient = new QueryClient();
+export const AppContext = createContext(null);
 
 export default function RootLayout({ children }) {
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("cart")));
+  }, []);
+
+  const values = {
+    cartItems,
+    setCartItems,
+  };
+
   return (
     <html lang="en">
       <body className={`${inter.className} mt-32`}>
-        <QueryClientProvider client={queryClient}>
-          <Header />
-          {children}
-          <Footer />
-        </QueryClientProvider>
+        <AppContext.Provider value={values}>
+          <QueryClientProvider client={queryClient}>
+            <Header />
+            {children}
+            <Footer />
+          </QueryClientProvider>
+        </AppContext.Provider>
       </body>
     </html>
   );

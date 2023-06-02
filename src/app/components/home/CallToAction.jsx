@@ -11,6 +11,7 @@ const CallToAction = () => {
         <div className="w-full lg:w-3/6	h-80 lg:h-full relative">
           <Image
             src="/assets/cta.jpg"
+            alt="call to action"
             fill
             className="object-cover rounded-tr-lg rounded-tl-lg lg:rounded-lt-lg lg:rounded-bl-lg lg:rounded-tr-none "
           />
