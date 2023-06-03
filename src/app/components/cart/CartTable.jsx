@@ -50,9 +50,7 @@ const CartTable = () => {
             </p>
           </div>
         </div>
-        {items.map(item => (
-          <CartTableItems item={item} />
-        ))}
+        {items && items.map(item => <CartTableItems item={item} />)}
       </div>
     </div>
   );

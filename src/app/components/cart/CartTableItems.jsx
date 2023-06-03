@@ -30,7 +30,11 @@ const CartTableItems = ({ item }) => {
                 {item.name}
               </h5>
               <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium">
-                <span>Green</span> |<span>M</span>
+                <span
+                  className="w-6 h-6 rounded-md"
+                  style={{ backgroundColor: `#${item.color}` }}
+                ></span>{" "}
+                |<span>{item.size}</span>
               </div>
             </div>
           </div>

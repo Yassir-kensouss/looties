@@ -17,7 +17,11 @@ const Quantity = ({ quantity, setQuantity }) => {
         >
           -
         </button>
-        <span className="w-18">{quantity}</span>
+        <input
+          value={quantity}
+          onChange={e => setQuantity(parseInt(e.target.value))}
+          className="w-6"
+        />
         <button
           onClick={() => setQuantity(quantity + 1)}
           className="pl-2 pr-2 hover:opacity-80 transition"
