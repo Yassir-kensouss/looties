@@ -30,12 +30,13 @@ const ProductCard = props => {
     );
 
     const cartProduct = {
+      _id: product._id,
       photos: product.photos,
       name: product.name,
       price: variantPrice?.price,
       size: size,
       color: color,
-      count: 1,
+      quantity: 1,
     };
     const items = [cartProduct, ...cartItems];
     setCartItems(items);
@@ -97,7 +98,7 @@ const ProductCard = props => {
           >
             <div className="absolute top-3 left-4 z-20 w-11/12 h-max-content bg-white rounded-lg p-2">
               <ProductVariant
-                variants={product.variants}
+                variants={product?.variants}
                 size={size}
                 setSize={setSize}
                 color={color}
@@ -178,7 +179,7 @@ const ProductVariant = ({
   return (
     <div>
       <div className="flex gap-3">
-        {variants.map(variant => (
+        {variants?.map(variant => (
           <div
             key={variant._id}
             tabIndex="0"

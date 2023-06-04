@@ -3,8 +3,13 @@ import React, { useState } from "react";
 import Quantity from "../ui-components/Quantity";
 import Image from "next/image";
 
-const CartTableItems = ({ item }) => {
+const CartTableItems = ({ item, setSelectedItems }) => {
   const [quantity, setQuantity] = useState(1);
+
+  const handleItemSelect = () => {
+    setSelectedItems(prevState => [...prevState, item]);
+  };
+
   return (
     <>
       <div className="flex items-center gap-4 py-4 border-b-2 border-b-zinc-100">
@@ -13,7 +18,11 @@ const CartTableItems = ({ item }) => {
           style={{ width: "5%" }}
           className="flex items-center"
         >
-          <input type="checkbox" className="border-2 checkbox checkbox-sm" />
+          <input
+            onChange={handleItemSelect}
+            type="checkbox"
+            className="border-2 checkbox checkbox-sm"
+          />
         </div>
         <div role="table head" style={{ width: "65%" }}>
           <div className="flex items-start gap-4 w-full">
@@ -40,7 +49,7 @@ const CartTableItems = ({ item }) => {
           </div>
         </div>
         <div role="table head" style={{ width: "15%" }}>
-          <Quantity quantity={quantity} setQuantity={setQuantity} />
+          <Quantity item={item} quantity={quantity} setQuantity={setQuantity} />
         </div>
         <div role="table head" style={{ width: "15%" }}>
           <p className="text-sm text-zinc-600 font-semibold">${item.price}</p>

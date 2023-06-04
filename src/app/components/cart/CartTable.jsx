@@ -1,23 +1,41 @@
 "use client";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Quantity from "../ui-components/Quantity";
 import CartTableItems from "./CartTableItems";
+import { AppContext } from "@/app/layout";
 
 const CartTable = () => {
   const [items, setItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const { setCartItems } = useContext(AppContext);
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
     setItems(cartItems);
+    console.log("updated");
   }, []);
+
+  const removeCartItem = () => {
+    let newItems = [];
+    selectedItems.map(item => {
+      newItems = items.filter(el => el._id !== item._id);
+    });
+    setItems(newItems);
+    localStorage.setItem("cart", JSON.stringify(newItems));
+    setCartItems(newItems);
+  };
 
   return (
     <div className="w-full lg:w-4/6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold text-gray-700">Cart</h2>
-        <button className="flex items-center gap-2 font-medium p-2 rounded-lg transition text-sm active:bg-zinc-100 focus:outline focus:outline-zinc-100 hover:bg-zinc-50">
+        <button
+          onClick={removeCartItem}
+          className="flex items-center gap-2 font-medium p-2 rounded-lg transition text-sm active:bg-zinc-100 focus:outline focus:outline-zinc-100 hover:bg-zinc-50"
+        >
           <TrashIcon width={15} height={15} />
           Remove
         </button>
@@ -50,7 +68,14 @@ const CartTable = () => {
             </p>
           </div>
         </div>
-        {items && items.map(item => <CartTableItems item={item} />)}
+        {items &&
+          items.map(item => (
+            <CartTableItems
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+              item={item}
+            />
+          ))}
       </div>
     </div>
   );

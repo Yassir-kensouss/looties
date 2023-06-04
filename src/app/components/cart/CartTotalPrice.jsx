@@ -1,7 +1,29 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const CartTotalPrice = () => {
+  const [total, setTotal] = useState({
+    total: 0,
+    discount: 0,
+    grandTotal: 0,
+  });
+
+  useEffect(() => {
+    const cartItems = JSON.parse(localStorage.getItem("cart"));
+
+    let totalPrices = 0;
+    cartItems.map(el => {
+      totalPrices = totalPrices + el.price;
+    });
+
+    setTotal({
+      ...total,
+      total: totalPrices,
+      grandTotal: totalPrices,
+    });
+  }, []);
+
   return (
     <div className="w-full lg:w-2/5">
       <div className="p-4 border border-zinc-300 rounded-lg divide-y ">
@@ -10,7 +32,7 @@ const CartTotalPrice = () => {
             <li className="flex items-center justify-between mb-3">
               <div className="text-sm text-zinc-600">Subtotal</div>
               <div className="font-semibold text-gray-800 text-sm">
-                $2,5000.00
+                ${total.total}
               </div>
             </li>
             <li className="flex items-center justify-between">
@@ -26,7 +48,7 @@ const CartTotalPrice = () => {
                 Grand Total
               </div>
               <div className="font-semibold text-gray-800 text-medium">
-                $2,5000.00
+                ${total.grandTotal}
               </div>
             </li>
           </ul>
