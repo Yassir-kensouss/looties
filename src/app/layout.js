@@ -6,6 +6,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { createContext, useEffect, useState } from "react";
 import { fetchGeneralSettings } from "@/services/settings";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,11 @@ export default function RootLayout({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [settings, setSettings] = useState({});
   const [loading, setLoading] = useState(false);
+  const [total, setTotal] = useState({
+    total: 0,
+    discount: 0,
+    grandTotal: 0,
+  });
 
   const fetchGlobalSettings = async () => {
     setLoading(true);
@@ -39,6 +45,8 @@ export default function RootLayout({ children }) {
     cartItems,
     setCartItems,
     settings,
+    total,
+    setTotal,
   };
 
   return (
@@ -49,6 +57,7 @@ export default function RootLayout({ children }) {
             <Header />
             {children}
             <Footer />
+            <Toaster />
           </QueryClientProvider>
         </AppContext.Provider>
       </body>

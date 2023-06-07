@@ -1,14 +1,39 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Quantity from "../ui-components/Quantity";
 import Image from "next/image";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import { AppContext } from "@/app/layout";
 
-const CartTableItems = ({ item, setSelectedItems }) => {
+const CartTableItems = ({ item, setItems }) => {
   const [quantity, setQuantity] = useState(1);
+  const { total, setTotal, setCartItems } = useContext(AppContext);
 
-  const handleItemSelect = () => {
-    setSelectedItems(prevState => [...prevState, item]);
+  const removeCartItem = () => {
+    // Update localstorage cart items
+    const items = JSON.parse(localStorage.getItem("cart"));
+    const newItems = items.filter(el => el._id !== item._id);
+    localStorage.setItem("cart", JSON.stringify(newItems));
+    setItems(newItems);
+    setCartItems(newItems);
+
+    // Update total price
+    let totalPrices = 0;
+    newItems.map(el => {
+      totalPrices = totalPrices + el.price;
+    });
+
+    setTotal({
+      ...total,
+      total: totalPrices,
+      grandTotal: totalPrices,
+    });
   };
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cart"));
+    setQuantity(item.quantity);
+  }, []);
 
   return (
     <>
@@ -16,13 +41,14 @@ const CartTableItems = ({ item, setSelectedItems }) => {
         <div
           role="table head"
           style={{ width: "5%" }}
-          className="flex items-center"
+          className="flex items-center ml-1"
         >
-          <input
-            onChange={handleItemSelect}
-            type="checkbox"
-            className="border-2 checkbox checkbox-sm"
-          />
+          <button
+            onClick={removeCartItem}
+            className="flex items-center gap-2 font-medium p-2 rounded-lg transition text-sm active:bg-zinc-100 focus:outline focus:outline-zinc-300 hover:bg-zinc-50"
+          >
+            <TrashIcon width={15} height={15} />
+          </button>
         </div>
         <div role="table head" style={{ width: "65%" }}>
           <div className="flex items-start gap-4 w-full">
@@ -52,7 +78,9 @@ const CartTableItems = ({ item, setSelectedItems }) => {
           <Quantity item={item} quantity={quantity} setQuantity={setQuantity} />
         </div>
         <div role="table head" style={{ width: "15%" }}>
-          <p className="text-sm text-zinc-600 font-semibold">${item.price}</p>
+          <p className="text-sm text-zinc-600 font-semibold">
+            ${item.originalPrice}
+          </p>
         </div>
       </div>
     </>

@@ -1,20 +1,21 @@
 "use client";
+import { AppContext } from "@/app/layout";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const CartTotalPrice = () => {
-  const [total, setTotal] = useState({
-    total: 0,
-    discount: 0,
-    grandTotal: 0,
-  });
+  const { total, setTotal } = useContext(AppContext);
+
+  const [itemsLen, setItemsLen] = useState(0);
 
   useEffect(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cart"));
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+    setItemsLen(cartItems.length);
 
     let totalPrices = 0;
     cartItems.map(el => {
-      totalPrices = totalPrices + el.price;
+      totalPrices = totalPrices + parseInt(el.price) * parseInt(el.quantity);
     });
 
     setTotal({
@@ -52,12 +53,14 @@ const CartTotalPrice = () => {
               </div>
             </li>
           </ul>
-          <Link
-            href="/checkout"
-            className="w-full block text-center transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white"
-          >
-            Checkout now
-          </Link>
+          {itemsLen > 0 ? (
+            <Link
+              href="/checkout"
+              className="w-full block text-center transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white"
+            >
+              Checkout now
+            </Link>
+          ) : null}
         </div>
       </div>
     </div>

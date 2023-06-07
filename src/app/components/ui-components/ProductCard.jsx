@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const ProductCard = props => {
   const { product, photo, title, price, oldPrice, preview } = props;
@@ -20,7 +20,7 @@ const ProductCard = props => {
     e.stopPropagation();
 
     if (!size || !color) {
-      toast("Here is your toast.");
+      toast.error("Please ensure the appropriate color and size are chosen.");
       return;
     }
 
@@ -34,6 +34,7 @@ const ProductCard = props => {
       photos: product.photos,
       name: product.name,
       price: variantPrice?.price,
+      originalPrice: variantPrice.price,
       size: size,
       color: color,
       quantity: 1,
@@ -135,6 +136,7 @@ const ProductCard = props => {
         <button
           onClick={addToCart}
           aria-label="add to cart"
+          data-product={product._id}
           className={`${
             !size || !color
               ? "bg-gray-500 hover:bg-gray-500 active:bg-gray-500"
@@ -143,7 +145,6 @@ const ProductCard = props => {
         >
           <ShoppingCartIcon width="100%" height={22} />
         </button>
-        <Toaster />
       </div>
     </div>
   );

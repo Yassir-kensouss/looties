@@ -1,5 +1,5 @@
 "use client";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import Quantity from "../ui-components/Quantity";
@@ -10,35 +10,15 @@ const CartTable = () => {
   const [items, setItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  const { setCartItems } = useContext(AppContext);
-
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart"));
     setItems(cartItems);
-    console.log("updated");
   }, []);
-
-  const removeCartItem = () => {
-    let newItems = [];
-    selectedItems.map(item => {
-      newItems = items.filter(el => el._id !== item._id);
-    });
-    setItems(newItems);
-    localStorage.setItem("cart", JSON.stringify(newItems));
-    setCartItems(newItems);
-  };
 
   return (
     <div className="w-full lg:w-4/6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold text-gray-700">Cart</h2>
-        <button
-          onClick={removeCartItem}
-          className="flex items-center gap-2 font-medium p-2 rounded-lg transition text-sm active:bg-zinc-100 focus:outline focus:outline-zinc-100 hover:bg-zinc-50"
-        >
-          <TrashIcon width={15} height={15} />
-          Remove
-        </button>
       </div>
       <div className="mt-8 h-96 overflow-auto" role="table">
         <div
@@ -49,11 +29,9 @@ const CartTable = () => {
             role="table head"
             style={{ width: "5%" }}
             className="flex items-center"
-          >
-            <input type="checkbox" className="border-2 checkbox checkbox-sm" />
-          </div>
+          ></div>
           <div role="table head" style={{ width: "65%" }}>
-            <p className="uppercase text-xs text-zinc-400 font-semibold">
+            <p className="uppercase text-xs text-zinc-400 font-semibold ml-1">
               Product
             </p>
           </div>
@@ -68,14 +46,24 @@ const CartTable = () => {
             </p>
           </div>
         </div>
-        {items &&
+        {items && items.length > 0 ? (
           items.map(item => (
             <CartTableItems
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}
               item={item}
+              setItems={setItems}
             />
-          ))}
+          ))
+        ) : (
+          <div className="flex flex-col justify-center items-center text-gray-600 py-10">
+            <ShoppingCartIcon width={50} height={50} />
+            <p className="text-center mt-3 text-gray-800 text-sm">
+              You have not add
+              <br /> any item to your cart yet!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
