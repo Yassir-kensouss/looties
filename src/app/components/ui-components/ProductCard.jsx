@@ -7,7 +7,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 const ProductCard = props => {
-  const { product, photo, title, price, oldPrice, preview } = props;
+  const {
+    product = {},
+    photo,
+    title,
+    price,
+    oldPrice,
+    preview,
+    width = "350px",
+    height = "400px",
+    addToCartBtnMargin = "lg:mr-0",
+    nameSize = "text-lg",
+    priceSize = "text-2xl",
+    oldPriceSize = "text-md",
+  } = props;
   const [mouseEnter, setMouseEnter] = useState(false);
   const [showVariant, setShowVariant] = useState(false);
   const [size, setSize] = useState(null);
@@ -59,11 +72,11 @@ const ProductCard = props => {
     >
       <div
         className="relative"
-        style={{ width: "350px", height: "400px" }}
+        style={{ width, height }}
         onMouseEnter={() => setShowVariant(true)}
         onMouseLeave={() => setShowVariant(false)}
       >
-        <div style={{ width: "350px", height: "400px" }} className="relative">
+        <div style={{ width, height }} className="relative">
           <Image
             src={photo}
             fill
@@ -97,7 +110,7 @@ const ProductCard = props => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="absolute top-3 left-4 z-20 w-11/12 h-max-content bg-white rounded-lg p-2">
+            <div className="absolute top-3 left-3 z-20 w-11/12 h-max-content bg-white rounded-lg p-2">
               <ProductVariant
                 variants={product?.variants}
                 size={size}
@@ -119,17 +132,17 @@ const ProductCard = props => {
           >
             <h3
               title={title}
-              className="text-lg text-gray-800 capitalize mb-2 w-full text-ellipsis whitespace-nowrap overflow-hidden"
+              className={`${nameSize} text-gray-800 capitalize mb-2 w-full text-ellipsis whitespace-nowrap overflow-hidden`}
             >
               {title}
             </h3>
           </Link>
           <div className="flex items-start gap-2">
-            <span className="text-2xl text-gray-800 font-semibold">
+            <span className={`${priceSize} text-gray-800 font-semibold`}>
               ${price}
             </span>
             {oldPrice ? (
-              <del className="text-md text-gray-400">${oldPrice}</del>
+              <del className={`${oldPriceSize} text-gray-400`}>${oldPrice}</del>
             ) : null}
           </div>
         </div>
@@ -141,7 +154,7 @@ const ProductCard = props => {
             !size || !color
               ? "bg-gray-500 hover:bg-gray-500 active:bg-gray-500"
               : ""
-          } rounded-lg text-white bg-gray-700 hover:bg-gray-600 active:bg-gray-800 min-w-12 min-h-12 w-12 h-12 flex items-center justify-center mr-0 lg:mr-4`}
+          } rounded-lg text-white bg-gray-700 hover:bg-gray-600 active:bg-gray-800 min-w-12 min-h-12 w-12 h-12 flex items-center justify-center mr-0 ${addToCartBtnMargin}`}
         >
           <ShoppingCartIcon width="100%" height={22} />
         </button>
@@ -202,6 +215,7 @@ const ProductVariant = ({
         <div className="flex gap-2 mt-2">
           {sizes.map(el => (
             <div
+              key={el}
               tabIndex="0"
               onClick={() => setSize(el)}
               className={`${

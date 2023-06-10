@@ -1,22 +1,25 @@
 import React from "react";
 import Collapse from "../ui-components/Collapse";
-import CategoryFilter from "../category/CategoryFilter";
+import CategoryFilter from "../../../components/CategoryFilter";
+import BrandsFilter from "@/components/BrandsFilter";
+import SizesFilter from "@/components/SizesFilter";
+import PricesFilter from "@/components/PricesFilter";
 
-const LeftSideFilters = () => {
+const LeftSideFilters = ({ categories, brands }) => {
   return (
     <>
-      <div className="w-72 lg:border-2 lg:rounded-lg lg:p-3">
+      <div className="w-72 lg:border-2 lg:rounded-lg lg:p-2">
         <Collapse label="Category">
-          <CategoryFilter />
+          <CategoryFilter categories={categories} />
         </Collapse>
         <Collapse label="Brands" className="mt-2">
-          expand
+          <BrandsFilter brands={brands} />
         </Collapse>
         <Collapse label="Price" className="mt-2">
-          Price
+          <PricesFilter />
         </Collapse>
         <Collapse label="Size" className="mt-2 border-b-0">
-          Size
+          <SizesFilter />
         </Collapse>
       </div>
     </>

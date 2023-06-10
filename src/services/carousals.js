@@ -7,7 +7,7 @@ export const fetchHeroCarousal = () => {
   });
 };
 
-export const fetchBrandsCarousal = () => {
+export const fetchBrands = () => {
   return auth({
     method: "GET",
     url: `/settings/carousals/brands/fetch`,

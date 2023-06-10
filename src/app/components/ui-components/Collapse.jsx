@@ -11,7 +11,7 @@ const Collapse = props => {
         {({ open }) => (
           <>
             <Disclosure.Button
-              className={`bg-zinc-50 ${className} hover:bg-zinc-100 focus:outline focus:outline-zinc-200 transition text-zinc-600 p-3 rounded-lg flex items-center justify-between w-full`}
+              className={`bg-zinc-100 ${className} hover:bg-zinc-100 focus:outline focus:outline-zinc-200 transition text-zinc-600 p-3 rounded-lg flex items-center text-sm justify-between w-full`}
             >
               {label}
               <ChevronRightIcon

@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
 import { useQuery } from "react-query";
-import { fetchBrandsCarousal } from "@/services/carousals";
+import { fetchBrands } from "@/services/carousals";
 import BrandsSkeleton from "../ui-components/skeletons/Brands";
 
 const Brands = () => {
@@ -17,7 +17,7 @@ const Brands = () => {
   const { isLoading } = useQuery(
     "brands-slides",
     async () => {
-      const res = await fetchBrandsCarousal();
+      const res = await fetchBrands();
       const data = await res.data.brands;
       setSlides(data);
     },

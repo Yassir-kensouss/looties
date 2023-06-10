@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 
 const CartTotalPrice = () => {
-  const { total, setTotal } = useContext(AppContext);
+  const { total, setTotal, cartItems } = useContext(AppContext);
 
   const [itemsLen, setItemsLen] = useState(0);
 
@@ -23,7 +23,7 @@ const CartTotalPrice = () => {
       total: totalPrices,
       grandTotal: totalPrices,
     });
-  }, []);
+  }, [cartItems]);
 
   return (
     <div className="w-full lg:w-2/5">

@@ -98,6 +98,9 @@ const FeaturedProducts = () => {
                     price={product.price}
                     oldPrice={product.oldPrice}
                     product={product}
+                    width="350px"
+                    height="400px"
+                    addToCartBtnMargin="lg:mr-4"
                   />
                 </SwiperSlide>
               ))}

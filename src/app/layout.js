@@ -27,6 +27,15 @@ export default function RootLayout({ children }) {
     discount: 0,
     grandTotal: 0,
   });
+  const [filters, setFilters] = useState({
+    category: [],
+    brand: [],
+    price: {
+      minPrice: 0,
+      maxPrice: 0,
+    },
+    size: [],
+  });
 
   const fetchGlobalSettings = async () => {
     setLoading(true);
@@ -47,6 +56,8 @@ export default function RootLayout({ children }) {
     settings,
     total,
     setTotal,
+    setFilters,
+    filters,
   };
 
   return (
