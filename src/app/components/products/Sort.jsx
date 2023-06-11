@@ -7,7 +7,7 @@ const list = [
   { label: "previous", code: "asc" },
 ];
 
-const SortProduct = () => {
+const Sort = () => {
   const { filters, setFilters } = useContext(AppContext);
   const handleSortChange = sort => {
     setFilters({
@@ -20,7 +20,7 @@ const SortProduct = () => {
     <>
       <div className="flex items-center gap-2">
         <span className="text-sm font-medium">Sort</span>
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-top dropdown-end">
           <label
             tabIndex={0}
             className="text-sm px-3 py-2 bg-zinc-100 ring-offset-1 ring-zinc-200 focus:ring-2 outline-none rounded-md w-24 block text-center text-zinc-700 capitalize cursor-pointer m-1"
@@ -46,4 +46,4 @@ const SortProduct = () => {
   );
 };
 
-export default SortProduct;
+export default Sort;

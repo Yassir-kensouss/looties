@@ -9,6 +9,14 @@ const SizesFilter = () => {
 
   const selectSize = e => {
     const value = e.target.value;
+    if (filters.size?.includes(value)) {
+      const removeFilter = filters.size?.filter(el => el !== value);
+      setFilters({
+        ...filters,
+        size: removeFilter,
+      });
+      return;
+    }
     setFilters({
       ...filters,
       size: [...filters.size, value],

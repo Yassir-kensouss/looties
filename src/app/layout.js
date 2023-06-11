@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
       maxPrice: 0,
     },
     size: [],
-    sort: "recent",
+    sort: { label: "recent", code: "asc" },
   });
 
   const fetchGlobalSettings = async () => {

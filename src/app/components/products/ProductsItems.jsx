@@ -8,9 +8,8 @@ import { PRODUCTS_LIMIT } from "@/utils/constants";
 import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
 import ProductsListSkeleton from "@/components/loading skeletons/ProductsListSkeleton";
 
-const ProductsItems = () => {
+const ProductsItems = ({ total, setTotal }) => {
   const [products, setProducts] = useState([]);
-  const [total, setTotal] = useState(0);
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
