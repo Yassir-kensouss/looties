@@ -7,4 +7,6 @@ const SIZES = [
   { value: "XXL", label: "XXL" },
 ];
 
-export { SIZES };
+const PRODUCTS_LIMIT = 10;
+
+export { SIZES, PRODUCTS_LIMIT };

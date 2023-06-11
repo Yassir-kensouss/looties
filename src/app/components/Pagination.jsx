@@ -32,6 +32,7 @@ const Pagination = ({ pages, setCurrentPage, currentPage }) => {
       </button>
       {pages.map(page => (
         <span
+          key={page}
           onClick={() => setCurrentPage(page - 1)}
           className={`text-sm cursor-pointer transition hover:bg-zinc-50 w-10 h-10 grid items-center text-center font-medium text-gray-600 rounded-lg ${
             currentPage === page - 1

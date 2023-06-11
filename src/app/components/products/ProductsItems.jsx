@@ -4,19 +4,26 @@ import ProductCard from "../ui-components/ProductCard";
 import Pagination from "../Pagination";
 import { fetchProductsByFilter } from "@/services/products";
 import { AppContext } from "@/app/layout";
+import { PRODUCTS_LIMIT } from "@/utils/constants";
+import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
+import ProductsListSkeleton from "@/components/loading skeletons/ProductsListSkeleton";
 
 const ProductsItems = () => {
   const [products, setProducts] = useState([]);
-  // const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(0);
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const getProducts = async (body, page) => {
+    setLoading(true);
     const response = await fetchProductsByFilter(body, page);
     const data = await response.data.products;
     const productsTotal = await response.data.total;
     setProducts(data);
-    const loop = productsTotal / 1;
+    setTotal(productsTotal);
+    setLoading(false);
+    const loop = productsTotal / PRODUCTS_LIMIT;
     const p = [];
     for (let i = 1; i <= loop; i++) {
       p.push(i);
@@ -29,6 +36,26 @@ const ProductsItems = () => {
   useEffect(() => {
     getProducts(filters, currentPage);
   }, [filters, currentPage]);
+
+  if (!products || (products.length === 0 && !loading)) {
+    return (
+      <div className="mt-20 flex flex-col gap-1 items-center justify-center w-full">
+        <ArchiveBoxXMarkIcon
+          className="text-indigo-500"
+          width={45}
+          height={45}
+        />
+        <h3 className="text-xl font-medium">Product Unavailable</h3>
+        <p className="text-gray-500 w-2/6 text-center">
+          There are no products available in the selected category
+        </p>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return <ProductsListSkeleton />;
+  }
 
   return (
     <>
@@ -50,13 +77,15 @@ const ProductsItems = () => {
           />
         ))}
       </div>
-      <div className="w-full flex justify-center mt-10">
-        <Pagination
-          pages={pages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </div>
+      {total > PRODUCTS_LIMIT ? (
+        <div className="w-full flex justify-center mt-10">
+          <Pagination
+            pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      ) : null}
     </>
   );
 };

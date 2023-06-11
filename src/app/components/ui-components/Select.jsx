@@ -1,4 +1,5 @@
-import { Listbox } from "@headlessui/react";
+"use client";
+import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 import React from "react";
 
@@ -16,18 +17,24 @@ const Select = ({ selectedPerson, setSelectedPerson, values }) => {
               />
             </span>
           </Listbox.Button>
-          <Listbox.Options className="z-10 absolute mt-1 w-full p-2 max-h-60 overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {values.map(person => (
-              <Listbox.Option
-                key={person.id}
-                value={person}
-                disabled={person.unavailable}
-                className="hover:bg-zinc-50 p-2 rounded-md cursor-pointer"
-              >
-                {person.name}
-              </Listbox.Option>
-            ))}
-          </Listbox.Options>
+          <Transition
+            leave="transition ease-in duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Listbox.Options className="z-50 absolute mt-1 w-full p-2 max-h-60 overflow-auto rounded-md bg-white text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              {values.map(person => (
+                <Listbox.Option
+                  key={person.name}
+                  value={person}
+                  disabled={person.unavailable}
+                  className="hover:bg-zinc-50 z-50 p-2 rounded-md cursor-pointer"
+                >
+                  {person.name}
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
+          </Transition>
         </div>
       </Listbox>
     </>

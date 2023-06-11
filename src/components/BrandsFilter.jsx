@@ -7,6 +7,14 @@ const BrandsFilter = ({ brands }) => {
 
   const selectBrand = e => {
     const value = e.target.value;
+    if (filters.brand?.includes(value)) {
+      const removeFilter = filters.brand?.filter(el => el !== value);
+      setFilters({
+        ...filters,
+        brand: removeFilter,
+      });
+      return;
+    }
     setFilters({
       ...filters,
       brand: [...filters.brand, value],

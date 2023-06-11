@@ -7,6 +7,14 @@ const CategoryFilter = ({ categories }) => {
 
   const selectCategory = e => {
     const value = e.target.value;
+    if (filters.category?.includes(value)) {
+      const removeFilter = filters.category?.filter(el => el !== value);
+      setFilters({
+        ...filters,
+        category: removeFilter,
+      });
+      return;
+    }
     setFilters({
       ...filters,
       category: [...filters.category, value],

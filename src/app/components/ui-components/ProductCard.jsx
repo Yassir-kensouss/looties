@@ -32,7 +32,7 @@ const ProductCard = props => {
   const addToCart = e => {
     e.stopPropagation();
 
-    if (!size || !color) {
+    if ((!size || !color) && product.variants.length > 0) {
       toast.error("Please ensure the appropriate color and size are chosen.");
       return;
     }
@@ -46,8 +46,9 @@ const ProductCard = props => {
       _id: product._id,
       photos: product.photos,
       name: product.name,
-      price: variantPrice?.price,
-      originalPrice: variantPrice.price,
+      price: product.variants.length > 0 ? variantPrice?.price : product.price,
+      originalPrice:
+        product.variants.length > 0 ? variantPrice?.price : product.price,
       size: size,
       color: color,
       quantity: 1,
@@ -102,7 +103,7 @@ const ProductCard = props => {
         </Transition>
         {
           <Transition
-            show={showVariant}
+            show={showVariant && product.variants.length > 0}
             enter="transition-opacity duration-500"
             enterFrom="opacity-0"
             enterTo="opacity-100"

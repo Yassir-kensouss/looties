@@ -1,15 +1,26 @@
-import { Listbox } from "@headlessui/react";
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+"use client";
+import React, { useContext, useState } from "react";
 import Select from "../ui-components/Select";
+import { AppContext } from "@/app/layout";
 
-const people = [
-  { id: 1, name: "Date", unavailable: false },
-  { id: 1, name: "Name", unavailable: false },
+const sortValues = [
+  { id: 1, name: "Recent", unavailable: false },
+  { id: 1, name: "Old", unavailable: false },
 ];
 
 const SortProduct = () => {
-  const [selectedPerson, setSelectedPerson] = useState(people[0]);
+  const [selectedPerson, setSelectedPerson] = useState(sortValues[0]);
+  const { filters, setFilters } = useContext(AppContext);
+
+  // const handleSelect = e => {
+  //   console.log("e.value", e.value);
+  //   setSelectedPerson()
+  //   setFilters({
+  //     ...filters,
+  //     sort: selectedPerson,
+  //   });
+  // };
+
   return (
     <>
       <div className="flex items-center gap-2">
@@ -17,7 +28,7 @@ const SortProduct = () => {
         <Select
           selectedPerson={selectedPerson}
           setSelectedPerson={setSelectedPerson}
-          values={people}
+          values={sortValues}
         />
       </div>
     </>
