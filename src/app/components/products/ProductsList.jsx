@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { Suspense, useContext, useState } from "react";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/outline";
 import AppliedFilters from "./AppliedFilters";
 import ProductsItems from "./ProductsItems";
@@ -8,7 +8,7 @@ import { PRODUCTS_LIMIT } from "@/utils/constants";
 import Sort from "./Sort";
 import { AppContext } from "@/app/layout";
 
-const ProductsList = () => {
+const ProductsList = ({ categories, brands }) => {
   const { filters } = useContext(AppContext);
 
   const [isMobileDialogOpen, setMobileDialogOpen] = useState(false);
@@ -52,6 +52,8 @@ const ProductsList = () => {
       <MobileFilterDialog
         isMobileDialogOpen={isMobileDialogOpen}
         setMobileDialogOpen={setMobileDialogOpen}
+        categories={categories}
+        brands={brands}
       />
     </>
   );

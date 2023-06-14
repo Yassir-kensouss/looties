@@ -8,3 +8,10 @@ export const fetchProductsByFilter = (body, page) => {
     data: body,
   });
 };
+
+export const fetchSingleProduct = id => {
+  return auth({
+    method: "GET",
+    url: `/product/${id}`,
+  });
+};

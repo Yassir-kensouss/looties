@@ -1,18 +1,36 @@
+import { AppContext } from "@/app/layout";
+import SignIn from "@/components/Auth/SignIn";
+import { signin } from "@/services/auth";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment } from "react";
-import LeftSideFilters from "./LeftSideFilters";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import React, { Fragment, useContext } from "react";
+import { toast } from "react-hot-toast";
+import { useMutation } from "react-query";
 
-const MobileFilterDialog = props => {
-  const { isMobileDialogOpen, setMobileDialogOpen, categories, brands } = props;
+const AddReview = ({ isOpen, setIsOpen }) => {
+  const { setProfile } = useContext(AppContext);
 
   function closeModal() {
-    setMobileDialogOpen(false);
+    setIsOpen(false);
   }
+
+  const { isLoading, mutate, data } = useMutation(data => signin(data), {
+    onSuccess: data => {
+      localStorage.setItem("jwt_data", JSON.stringify(data.data));
+      setProfile(data.data.user);
+      setIsOpen(false);
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
+  const submit = values => {
+    mutate(values);
+  };
 
   return (
     <div>
-      <Transition appear show={isMobileDialogOpen} as={Fragment}>
+      <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -40,18 +58,12 @@ const MobileFilterDialog = props => {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900 flex items-center justify-between"
+                    className="mb-8 text-lg font-medium leading-6 text-gray-900"
                   >
-                    <div>Craft your filter</div>
-                    <button
-                      onClick={closeModal}
-                      className="basic-btn bg-zinc-100 lg:hidden flex"
-                    >
-                      <XMarkIcon width="100%" height={20} />
-                    </button>
+                    Sign In
                   </Dialog.Title>
-                  <div className="mt-4 max-h-72 overflow-y-auto">
-                    <LeftSideFilters categories={categories} brands={brands} />
+                  <div className="mt-2">
+                    <SignIn isLoading={isLoading} submit={submit} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -63,4 +75,4 @@ const MobileFilterDialog = props => {
   );
 };
 
-export default MobileFilterDialog;
+export default AddReview;

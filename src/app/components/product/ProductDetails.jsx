@@ -1,8 +1,13 @@
 "use client";
+import { AppContext } from "@/app/layout";
 import { StarIcon } from "@heroicons/react/24/solid";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
-const ProductDetails = () => {
+const ProductDetails = ({ product }) => {
+  const { settings } = useContext(AppContext);
+
+  const currency = settings.currency?.split("-")[1];
+
   const [quantity, setQuantity] = useState(1);
   const reduceQuantity = () => {
     if (quantity === 1) {
@@ -14,7 +19,10 @@ const ProductDetails = () => {
     <div className="w-full lg:w-8/12 ">
       <div className="divide-y">
         <div className="pb-4">
-          <h1 className="text-3xl font-semibold">Blazer Jacket</h1>
+          <h1 className="text-3xl font-semibold">{product.name}</h1>
+          <p className="py-2 text-sm text-gray-700 w-4/5">
+            {product.shortDescription}
+          </p>
           <div className="flex items-center gap-1 my-2">
             <StarIcon width={17} height={17} className="text-amber-400" />
             <StarIcon width={17} height={17} className="text-amber-400" />
@@ -23,7 +31,18 @@ const ProductDetails = () => {
             <StarIcon width={17} height={17} className="text-gray-200" />
             <span className="text-sm">(5)</span>
           </div>
-          <p className="text-xl font-semibold text-gray-700">$250</p>
+          <div className="flex gap-3">
+            <p className="text-xl font-semibold text-gray-700">
+              {currency}
+              {product.price}
+            </p>
+            <p className="text-sm font-medium text-gray-400">
+              <del>
+                {currency}
+                {product.oldPrice}
+              </del>
+            </p>
+          </div>
         </div>
         <div className="flex items-start gap-8 py-4">
           <div>

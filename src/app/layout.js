@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
     discount: 0,
     grandTotal: 0,
   });
+  const [profile, setProfile] = useState({});
   const [filters, setFilters] = useState({
     category: [],
     brand: [],
@@ -59,6 +60,8 @@ export default function RootLayout({ children }) {
     setTotal,
     setFilters,
     filters,
+    profile,
+    setProfile,
   };
 
   return (

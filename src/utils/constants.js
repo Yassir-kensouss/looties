@@ -7,6 +7,6 @@ const SIZES = [
   { value: "XXL", label: "XXL" },
 ];
 
-const PRODUCTS_LIMIT = 10;
+const PRODUCTS_LIMIT = 9;
 
 export { SIZES, PRODUCTS_LIMIT };

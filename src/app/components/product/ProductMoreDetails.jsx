@@ -2,12 +2,14 @@
 import { Tab } from "@headlessui/react";
 import React from "react";
 import ProductDiscussion from "./ProductDiscussion";
+import ProductDescription from "./ProductDescription";
+import ProductReviews from "./ProductReviews";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const ProductMoreDetails = () => {
+const ProductMoreDetails = ({ product }) => {
   return (
     <section className="mt-8">
       <Tab.Group>
@@ -44,8 +46,12 @@ const ProductMoreDetails = () => {
           </Tab>
         </Tab.List>
         <Tab.Panels>
-          <Tab.Panel className="py-4">Content 1</Tab.Panel>
-          <Tab.Panel className="py-4">Content 2</Tab.Panel>
+          <Tab.Panel className="py-4">
+            <ProductDescription product={product} />
+          </Tab.Panel>
+          <Tab.Panel className="py-4">
+            <ProductReviews />
+          </Tab.Panel>
           <Tab.Panel className="py-4">
             <ProductDiscussion />
           </Tab.Panel>

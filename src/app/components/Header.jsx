@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import SearchInput from "./inputs/SearchInput";
 import { AppContext } from "../layout";
+import Image from "next/image";
 
 const products = [
   {
@@ -30,7 +31,7 @@ const callsToAction = [
 ];
 
 const Header = () => {
-  const { cartItems, settings } = useContext(AppContext);
+  const { cartItems, settings, profile } = useContext(AppContext);
 
   return (
     <header className="bg-white fixed top-0 left-0 w-full z-50">
@@ -145,9 +146,20 @@ const Header = () => {
             ) : null}
             <ShoppingCartIcon width="100%" height={20} aria-hidden="true" />
           </Link>
-          <Link href="/profile" className="basic-btn" aria-label="profile">
-            <UserIcon width="100%" height={19} aria-hidden="true" />
-          </Link>
+          {profile && profile.avatar ? (
+            <div className="relative w-10 h-10 rounded-full">
+              <Image
+                className="w-full h-full rounded-full object-cover"
+                fill
+                alt="profile image"
+                src={profile.avatar}
+              />
+            </div>
+          ) : (
+            <Link href="/profile" className="basic-btn" aria-label="profile">
+              <UserIcon width="100%" height={19} aria-hidden="true" />
+            </Link>
+          )}
         </div>
       </nav>
     </header>

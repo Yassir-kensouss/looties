@@ -60,9 +60,6 @@ const ProductCard = props => {
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cart");
-    if (storedCartItems) {
-      console.log("first", JSON.parse(storedCartItems));
-    }
   }, []);
 
   return (
@@ -128,7 +125,7 @@ const ProductCard = props => {
       <div className="flex items-start justify-between mt-4">
         <div className="w-4/6">
           <Link
-            href="/product"
+            href={`/products/${product._id}`}
             className="cursor-pointer hover:opacity-80 transition"
           >
             <h3

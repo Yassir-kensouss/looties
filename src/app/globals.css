@@ -119,3 +119,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
+.product-description.gradient {
+  -webkit-mask-image: linear-gradient(0deg, rgba(2,0,36,0) 0%, rgba(52,30,65,0.7457107843137255) 39%);
+  mask-image: linear-gradient(0deg, rgba(2,0,36,0) 0%, rgba(52,30,65,0.7457107843137255) 39%);
+}

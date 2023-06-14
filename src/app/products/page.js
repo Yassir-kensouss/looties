@@ -41,7 +41,7 @@ const Products = async () => {
           <LeftSideFilters categories={categories} brands={brands} />
         </div>
         <section className="w-full">
-          <ProductsList />
+          <ProductsList categories={categories} brands={brands} />
         </section>
       </div>
       <CallToAction />
