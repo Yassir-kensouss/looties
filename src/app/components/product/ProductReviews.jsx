@@ -8,7 +8,7 @@ const ProductReviews = () => {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="mt-4 focus:ring-2 ring-offset-2 ring-gray-500 hover:bg-zinc-200 active:bg-zinc-100 text-sm p-3 bg-zinc-100 rounded-lg"
+        className="mt-4 focus:ring-2 ring-offset-2 outline-none ring-gray-500 hover:bg-zinc-200 active:bg-zinc-100 text-sm p-3 bg-zinc-100 rounded-lg"
       >
         Write a Review
       </button>

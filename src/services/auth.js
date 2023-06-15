@@ -7,3 +7,11 @@ export const signin = data => {
     data,
   });
 };
+
+export const signup = data => {
+  return auth({
+    method: "POST",
+    url: `/signup`,
+    data,
+  });
+};

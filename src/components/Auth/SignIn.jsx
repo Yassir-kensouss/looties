@@ -1,11 +1,17 @@
+import { AUTH_TYPE } from "@/utils/constants";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 
 const SignIn = props => {
-  const { submit, isLoading } = props;
+  const { submit, isLoading = false, auth, setAuth } = props;
+
+  const handleAuthType = () => {
+    auth === AUTH_TYPE[0] ? setAuth(AUTH_TYPE[1]) : setAuth(AUTH_TYPE[0]);
+  };
 
   return (
     <div>
+      <h3 className="text-xl mb-8 tet-gray-900 font-semibold">Sign In</h3>
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={values => {
@@ -50,20 +56,22 @@ const SignIn = props => {
             </label>
             <p className="text-sm mt-4 text-zinc-700 cursor-pointer hover:text-zinc-500 active:text-zinc-700">
               You don't have an account -{" "}
-              <span className="font-semibold">Sign Up now</span>
+              <span className="font-semibold" onClick={handleAuthType}>
+                Sign Up now
+              </span>
             </p>
             <button
               disabled={!isValid || isLoading}
               className={`flex items-center gap-4 p-3 hover:bg-zinc-700 active:bg-zinc-800 focus:ring-2 ring-offset-1 ring-zinc-700 bg-zinc-800 text-white text-sm rounded-lg mt-4 ${
                 !isValid || isLoading
-                  ? "bg-zinc-500 hover:bg-zinc-500 active:bg-zinc-500"
+                  ? "hover:bg-zinc-500 active:bg-zinc-500 bg-zinc-500"
                   : ""
               }`}
             >
               Sign In
               {isLoading ? (
                 <svg
-                  class="animate-spin -ml-1 h-5 w-5 text-white"
+                  className="animate-spin -ml-1 h-5 w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -74,7 +82,7 @@ const SignIn = props => {
                     cy="12"
                     r="10"
                     stroke="currentColor"
-                    stroke-width="4"
+                    strokeWidth="4"
                   ></circle>
                   <path
                     class="opacity-75"

@@ -33,13 +33,13 @@ const ProductSlideShow = ({ product }) => {
         />
         <button
           onClick={() => previousImage()}
-          className="transition hover:bg-zinc-100 focus:outline focus:outline-violet-200 absolute top-1/2 left-5 z-10 p-2 rounded-lg bg-zinc-50 flex items-center justify-center"
+          className="transition hover:bg-zinc-100 focus:outline focus:outline-violet-200 absolute top-1/2 left-5 p-2 rounded-lg bg-zinc-50 flex items-center justify-center"
         >
           <ChevronLeftIcon width={12} height={12} />
         </button>
         <button
           onClick={() => nextImage()}
-          className="transition hover:bg-zinc-100 focus:outline focus:outline-violet-200 absolute top-1/2 right-5 z-10 p-2 rounded-lg bg-zinc-50 flex items-center justify-center"
+          className="transition hover:bg-zinc-100 focus:outline focus:outline-violet-200 absolute top-1/2 right-5 p-2 rounded-lg bg-zinc-50 flex items-center justify-center"
         >
           <ChevronRightIcon width={12} height={12} />
         </button>

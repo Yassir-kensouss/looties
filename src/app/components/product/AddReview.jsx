@@ -1,31 +1,66 @@
 import { AppContext } from "@/app/layout";
 import SignIn from "@/components/Auth/SignIn";
-import { signin } from "@/services/auth";
+import SignUp from "@/components/Auth/SignUp";
+import { signin, signup } from "@/services/auth";
+import { AUTH_TYPE } from "@/utils/constants";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useContext } from "react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
+import React, { Fragment, useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useMutation } from "react-query";
 
 const AddReview = ({ isOpen, setIsOpen }) => {
   const { setProfile } = useContext(AppContext);
 
+  const [auth, setAuth] = useState(AUTH_TYPE[0]);
+  const [phone, setPhone] = useState(null);
+
   function closeModal() {
     setIsOpen(false);
   }
 
-  const { isLoading, mutate, data } = useMutation(data => signin(data), {
+  const signin = useMutation(data => signin(data), {
     onSuccess: data => {
       localStorage.setItem("jwt_data", JSON.stringify(data.data));
       setProfile(data.data.user);
       setIsOpen(false);
     },
     onError: () => {
-      toast.error("Something went wrong");
+      toast.error("Password or email are incorrect");
     },
   });
 
-  const submit = values => {
-    mutate(values);
+  const signup = useMutation(data => signup(data), {
+    onSuccess: data => {
+      localStorage.setItem("jwt_data", JSON.stringify(data.data));
+      setProfile(data.data.user);
+      setIsOpen(false);
+    },
+    onError: () => {
+      toast.error("Password or email are incorrect");
+    },
+  });
+
+  const signIn = values => {
+    signin.mutate(values);
+  };
+
+  const signUp = values => {
+    signup.mutate({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      mobile: phone,
+      role: 0,
+      address: {
+        country: values.country,
+        city: values.city,
+        state: values.state,
+        zipCode: values.postal_code,
+        address: values.address,
+      },
+    });
   };
 
   return (
@@ -41,7 +76,7 @@ const AddReview = ({ isOpen, setIsOpen }) => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-40" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
@@ -55,15 +90,40 @@ const AddReview = ({ isOpen, setIsOpen }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="mb-8 text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Sign In
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <SignIn isLoading={isLoading} submit={submit} />
+                <Dialog.Panel
+                  style={{ width: "900px", height: "500px" }}
+                  className="transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all"
+                >
+                  <div className="flex h-full">
+                    <div style={{ height: "500px" }} className="relative w-1/3">
+                      <Image
+                        className="w-full h-full block object-cover"
+                        fill
+                        alt="signup-bg"
+                        src="/assets/signup-bg.jpg"
+                      />
+                    </div>
+                    <div className="overflow-auto flex w-2/3">
+                      <div className="w-full p-14 overflow-auto">
+                        {auth === AUTH_TYPE[0] ? (
+                          <SignIn
+                            auth={auth}
+                            setAuth={setAuth}
+                            isLoading={signup.isLoading}
+                            submit={signIn}
+                          />
+                        ) : (
+                          <SignUp
+                            auth={auth}
+                            setAuth={setAuth}
+                            isLoading={isLoading}
+                            submit={signUp}
+                            phone={phone}
+                            setPhone={setPhone}
+                          />
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
