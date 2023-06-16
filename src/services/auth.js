@@ -15,3 +15,10 @@ export const signup = data => {
     data,
   });
 };
+
+export const signout = userId => {
+  return auth({
+    method: "GET",
+    url: `/signout/${userId}`,
+  });
+};

@@ -3,16 +3,12 @@ import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import AuthPersonal from "./AuthPersonal";
 import AuthAddress from "./AuthAddress";
-import Image from "next/image";
+import { signupValidation } from "@/utils/validations";
 
 const SignUp = props => {
   const { submit, isLoading, auth, setAuth, phone, setPhone } = props;
 
   const [step, setStep] = useState("personal");
-
-  const handleAuthType = () => {
-    auth === AUTH_TYPE[0] ? setAuth(AUTH_TYPE[1]) : setAuth(AUTH_TYPE[0]);
-  };
 
   return (
     <div className="h-full">
@@ -21,23 +17,13 @@ const SignUp = props => {
       </h3>
       <Formik
         initialValues={{ email: "", password: "" }}
-        validate={values => {
-          const errors = {};
-          if (!values.email) {
-            errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = "Invalid email address";
-          }
-          return errors;
-        }}
+        validate={signupValidation}
         onSubmit={submit}
       >
-        {({ isValid }) => (
+        {({ isValid, values }) => (
           <Form>
             {step === "personal" ? (
-              <AuthPersonal step={step} setStep={setStep} isValid={isValid} />
+              <AuthPersonal step={step} setStep={setStep} values={values} />
             ) : (
               <AuthAddress
                 phone={phone}
@@ -45,6 +31,7 @@ const SignUp = props => {
                 step={step}
                 setStep={setStep}
                 isValid={isValid}
+                isLoading={isLoading}
               />
             )}
           </Form>

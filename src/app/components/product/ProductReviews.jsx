@@ -1,39 +1,42 @@
 import React, { useState } from "react";
 import ProductReview from "./ProductReview";
 import AddReview from "./AddReview";
+import ReviewsSkeleton from "@/components/loading skeletons/ReviewsSkeleton";
 
-const ProductReviews = () => {
+const ProductReviews = ({ reviews = [], isLoading }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <>
+    <div className="product-reviews-container">
       <button
         onClick={() => setIsOpen(true)}
         className="mt-4 focus:ring-2 ring-offset-2 outline-none ring-gray-500 hover:bg-zinc-200 active:bg-zinc-100 text-sm p-3 bg-zinc-100 rounded-lg"
       >
         Write a Review
       </button>
-      <div className="grid grid-cols-2 gap-12 mt-8">
-        <ProductReview
-          rating="5"
-          review="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis nihil quaerat repudiandae numquam debitis temporibus deleniti natus explicabo necessitatibus saepe totam, sit eaque consectetur nostrum dignissimos quod amet optio iste?"
-          username="John kholman"
-          createdAt="May 30, 2023"
-        />
-        <ProductReview
-          rating="5"
-          review="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis nihil quaerat repudiandae numquam debitis temporibus deleniti natus explicabo necessitatibus saepe totam, sit eaque consectetur nostrum dignissimos quod amet optio iste?"
-          username="John kholman"
-          createdAt="May 30, 2023"
-        />
-        <ProductReview
-          rating="5"
-          review="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis nihil quaerat repudiandae numquam debitis temporibus deleniti natus explicabo necessitatibus saepe totam, sit eaque consectetur nostrum dignissimos quod amet optio iste?"
-          username="John kholman"
-          createdAt="May 30, 2023"
-        />
-      </div>
+      {reviews.length > 0 ? (
+        <>
+          {isLoading ? (
+            <ReviewsSkeleton className="mt-8" />
+          ) : (
+            <div className="grid grid-cols-2 gap-12 mt-8">
+              {reviews.map(review => (
+                <ProductReview
+                  rating={review.rating}
+                  review={review.review}
+                  username={review.username}
+                  createdAt={review.createdAt}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <p className="mt-4 text-gray-600">
+          This product does not have any reviews for the moment.
+        </p>
+      )}
       <AddReview isOpen={isOpen} setIsOpen={setIsOpen} />
-    </>
+    </div>
   );
 };
 

@@ -1,11 +1,11 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 const AuthAddress = props => {
-  const { step, setStep, isValid, phone, setPhone } = props;
+  const { isLoading, setStep, isValid, phone, setPhone } = props;
 
   const prevStep = () => {
     setStep("personal");
@@ -25,23 +25,33 @@ const AuthAddress = props => {
           className="custom-input"
         />
       </label>
+      <ErrorMessage
+        className="text-red-500 text-sm mt-2"
+        component="div"
+        name="address"
+      />
       <label htmlFor="city" className="mt-4 block text-sm">
         <span className="font-medium text-zinc-500">City</span>
         <Field
           id="city"
           type="text"
           name="city"
-          placeholder="Add your city"
+          placeholder="Add your living city"
           className="custom-input"
         />
       </label>
-      <label htmlFor="region" className="mt-4 block text-sm">
-        <span className="font-medium text-zinc-500">Region</span>
+      <ErrorMessage
+        className="text-red-500 text-sm mt-2"
+        component="div"
+        name="city"
+      />
+      <label htmlFor="state" className="mt-4 block text-sm">
+        <span className="font-medium text-zinc-500">State</span>
         <Field
-          id="region"
+          id="state"
           type="text"
-          name="region"
-          placeholder="Add your region"
+          name="state"
+          placeholder="Add your living state"
           className="custom-input"
         />
       </label>
@@ -55,6 +65,11 @@ const AuthAddress = props => {
           className="custom-input"
         />
       </label>
+      <ErrorMessage
+        className="text-red-500 text-sm mt-2"
+        component="div"
+        name="postal_code"
+      />
       <label htmlFor="postal_code" className="mt-4 block text-sm">
         <span className="mb-2 block font-medium text-zinc-500">Phone:</span>
         <PhoneInput
@@ -84,6 +99,28 @@ const AuthAddress = props => {
           }`}
         >
           Create Account
+          {isLoading ? (
+            <svg
+              className="animate-spin -ml-1 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          ) : null}
         </button>
       </div>
     </div>
