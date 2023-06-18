@@ -1,12 +1,16 @@
+import { signout } from "@/services/auth";
 import { isAuthenticated } from "@/utils/helpers";
 import { Popover, Transition } from "@headlessui/react";
 import { UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
 import { useQuery } from "react-query";
 
 const ProfileDropdown = () => {
-  const { refetch } = useQuery(
+  const router = useRouter();
+
+  const { refetch, isLoading } = useQuery(
     "logout",
     async () => {
       const userId = isAuthenticated().user._id;
@@ -17,6 +21,7 @@ const ProfileDropdown = () => {
       refetchOnWindowFocus: false,
       onSuccess: () => {
         localStorage.removeItem("jwt_data");
+        router.refresh();
       },
     }
   );
@@ -56,9 +61,31 @@ const ProfileDropdown = () => {
             </div>
             <div
               onClick={refetch}
-              className="hover:bg-zinc-100 active:bg-zinc-50 cursor-pointer text-base text-gray-800 p-2"
+              className="flex justify-between items-center gap-2 hover:bg-zinc-100 active:bg-zinc-50 cursor-pointer text-base text-gray-800 p-2"
             >
-              Log out
+              <div>Log out</div>
+              {isLoading ? (
+                <svg
+                  className="animate-spin -ml-1 h-5 w-5 text-gray"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              ) : null}
             </div>
           </Popover.Panel>
         </Transition>

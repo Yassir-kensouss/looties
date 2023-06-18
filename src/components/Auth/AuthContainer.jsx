@@ -7,10 +7,13 @@ import { useMutation } from "react-query";
 import { signin, signup } from "@/services/auth";
 import { AUTH_TYPE } from "@/utils/constants";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const AuthContainer = ({ isOpen, setIsOpen }) => {
   const [auth, setAuth] = useState(AUTH_TYPE[0]);
   const [phone, setPhone] = useState(null);
+
+  const router = useRouter();
 
   function closeModal() {
     setIsOpen(false);
@@ -19,6 +22,7 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
   const signinQuery = useMutation(data => signin(data), {
     onSuccess: data => {
       localStorage.setItem("jwt_data", JSON.stringify(data.data));
+      router.refresh();
       setIsOpen(false);
     },
     onError: () => {
@@ -29,6 +33,7 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
   const signupQuery = useMutation(data => signup(data), {
     onSuccess: data => {
       localStorage.setItem("jwt_data", JSON.stringify(data.data));
+      router.refresh();
       setIsOpen(false);
     },
     onError: error => {

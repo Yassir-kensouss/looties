@@ -100,7 +100,7 @@ const ProductCard = props => {
         </Transition>
         {
           <Transition
-            show={showVariant && product.variants.length > 0}
+            show={showVariant && Object.keys(product.variants).length > 0}
             enter="transition-opacity duration-500"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -176,13 +176,8 @@ const ProductVariant = ({
     e.stopPropagation();
 
     setColor(e.target.dataset.color);
-
-    const sameColor = variants.filter(
-      variant => variant.color === e.target.dataset.color
-    );
-
     setSizes(
-      sameColor.map(el => {
+      variants[e.target.dataset.color].map(el => {
         return el.size;
       })
     );
@@ -191,19 +186,17 @@ const ProductVariant = ({
   return (
     <div>
       <div className="flex gap-3">
-        {variants?.map(variant => (
+        {Object.keys(variants).map(variant => (
           <div
-            key={variant._id}
+            key={variant}
             tabIndex="0"
-            data-color={variant.color}
+            data-color={variant}
             className={`${
-              color === variant.color
-                ? "ring-offset-1 ring-2 ring-zinc-950"
-                : ""
+              color === variant ? "ring-offset-1 ring-2 ring-zinc-950" : ""
             } w-10 h-10 rounded-lg cursor-pointer focus:outline outline-2 outline-offset-2 active:opacity-70 transition`}
             style={{
-              background: `#${variant.color}`,
-              outlineColor: `#${variant.color}`,
+              background: `#${variant}`,
+              outlineColor: `#${variant}`,
             }}
             onClick={selectVariantColor}
           ></div>

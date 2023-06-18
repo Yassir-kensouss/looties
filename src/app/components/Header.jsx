@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -15,11 +15,9 @@ import {
 import Link from "next/link";
 import SearchInput from "./inputs/SearchInput";
 import { AppContext } from "../layout";
-import Image from "next/image";
 import { isAuthenticated } from "@/utils/helpers";
-import { useQuery } from "react-query";
-import { signout } from "@/services/auth";
 import ProfileDropdown from "./ui-components/ProfileDropdown";
+import AuthContainer from "@/components/Auth/AuthContainer";
 
 const products = [
   {
@@ -36,6 +34,8 @@ const callsToAction = [
 
 const Header = () => {
   const { cartItems, settings } = useContext(AppContext);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="bg-white fixed top-0 left-0 w-full z-10">
@@ -150,7 +150,18 @@ const Header = () => {
             ) : null}
             <ShoppingCartIcon width="100%" height={20} aria-hidden="true" />
           </Link>
-          <ProfileDropdown />
+          {isAuthenticated() ? (
+            <ProfileDropdown />
+          ) : (
+            <button
+              onClick={() => setIsOpen(true)}
+              className="outline-none basic-btn"
+              aria-label="authentication dialog"
+            >
+              <UserIcon width="100%" height={19} aria-hidden="true" />
+            </button>
+          )}
+          <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </nav>
     </header>
