@@ -3,8 +3,9 @@ import { Transition } from "@headlessui/react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
+import uniqid from "uniqid";
 
 const ProductCard = props => {
   const {
@@ -32,35 +33,60 @@ const ProductCard = props => {
   const addToCart = e => {
     e.stopPropagation();
 
-    if ((!size || !color) && product.variants.length > 0) {
+    // Force the user to choose color and size first
+    if ((!size || !color) && Object(product.variants).length > 0) {
       toast.error("Please ensure the appropriate color and size are chosen.");
       return;
     }
 
     let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    const variantPrice = product.variants.find(
-      el => el.size === size && el.color === color
-    );
+    const variantPrice = product.variants[color].find(el => el.size === size);
 
     const cartProduct = {
-      _id: product._id,
+      vid: uniqid(),
+      productId: product._id,
       photos: product.photos,
       name: product.name,
-      price: product.variants.length > 0 ? variantPrice?.price : product.price,
+      price:
+        Object.keys(product.variants).length > 0
+          ? variantPrice?.price
+          : product.price,
       originalPrice:
-        product.variants.length > 0 ? variantPrice?.price : product.price,
+        Object.keys(product.variants).length > 0
+          ? variantPrice?.price
+          : product.price,
       size: size,
       color: color,
       quantity: 1,
     };
-    const items = [cartProduct, ...cartItems];
-    setCartItems(items);
-    localStorage.setItem("cart", JSON.stringify(items));
-  };
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cart");
-  }, []);
+    // check if cart already contain the added product
+    const _vr =
+      cartItems.find(
+        el =>
+          el.size === cartProduct.size &&
+          el.color === cartProduct.color &&
+          el._id === cartProduct._id
+      ) || {};
+
+    // Increase the quantity, If the product already exist in the cart with same variants
+    if (Object.keys(_vr).length > 0) {
+      const newCartContent = cartItems.filter(
+        el =>
+          el.size !== cartProduct.size &&
+          el.color !== cartProduct.color &&
+          el._id !== cartProduct._id
+      );
+      _vr.quantity = _vr.quantity + 1;
+      const items = [_vr, ...newCartContent];
+      setCartItems(items);
+      localStorage.setItem("cart", JSON.stringify(items));
+    } else {
+      const items = [cartProduct, ...cartItems];
+      setCartItems(items);
+      localStorage.setItem("cart", JSON.stringify(items));
+    }
+  };
 
   return (
     <div
@@ -82,22 +108,24 @@ const ProductCard = props => {
             alt={title}
           />
         </div>
-        <Transition
-          show={mouseEnter}
-          enter="transition-opacity duration-500"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-500"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Image
-            src={preview}
-            fill
-            className="object-cover rounded-lg absolute top-0 left-0 z-20"
-            alt={title}
-          />
-        </Transition>
+        {preview ? (
+          <Transition
+            show={mouseEnter}
+            enter="transition-opacity duration-500"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-500"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Image
+              src={preview}
+              fill
+              className="object-cover rounded-lg absolute top-0 left-0 z-20"
+              alt={title}
+            />
+          </Transition>
+        ) : null}
         {
           <Transition
             show={showVariant && Object.keys(product.variants).length > 0}

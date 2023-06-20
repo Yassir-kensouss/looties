@@ -4,6 +4,7 @@ import Quantity from "../ui-components/Quantity";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { AppContext } from "@/app/layout";
+import Link from "next/link";
 
 const CartTableItems = ({ item, setItems }) => {
   const [quantity, setQuantity] = useState(1);
@@ -61,9 +62,11 @@ const CartTableItems = ({ item, setItems }) => {
               />
             </div>
             <div>
-              <h5 className="text-md mb-1 text-gray-800 font-medium w-52 text-ellipsis whitespace-nowrap overflow-hidden">
-                {item.name}
-              </h5>
+              <Link href={`/products/${item.productId}`}>
+                <h5 className="text-md mb-1 text-gray-800 font-medium w-52 text-ellipsis whitespace-nowrap overflow-hidden">
+                  {item.name}
+                </h5>
+              </Link>
               <div className="flex items-center gap-2 text-zinc-500 text-sm font-medium">
                 <span
                   className="w-6 h-6 rounded-md"

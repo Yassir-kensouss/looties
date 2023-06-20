@@ -21,7 +21,7 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
 
   const signinQuery = useMutation(data => signin(data), {
     onSuccess: data => {
-      localStorage.setItem("jwt_data", JSON.stringify(data.data));
+      localStorage.setItem("lotie_jwt_data", JSON.stringify(data.data));
       router.refresh();
       setIsOpen(false);
     },
