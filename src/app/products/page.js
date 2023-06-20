@@ -1,13 +1,9 @@
-import React, { Suspense, useContext } from "react";
+import React from "react";
 import BreadCrumbs from "../components/ui-components/BreadCrumbs";
 import ProductsList from "../components/products/ProductsList";
-import CallToAction from "../components/home/CallToAction";
-import Subscribe from "../components/home/Subscribe";
 import LeftSideFilters from "../components/products/LeftSideFilters";
-import { fetchProductsByFilter } from "@/services/products";
 import { fetchCategories } from "@/services/categories";
 import { fetchBrands } from "@/services/carousals";
-import { AppContext } from "../layout";
 
 const crumbs = [
   { link: "/", label: "Home" },
@@ -34,7 +30,7 @@ const Products = async () => {
   const brands = await getBrands();
 
   return (
-    <main className="mx-auto gap-5 max-w-7xl p-6 lg:px-8">
+    <>
       <BreadCrumbs crumbs={crumbs} />
       <div className="mt-8 flex items-start gap-8">
         <div className="hidden lg:block sticky top-28">
@@ -44,9 +40,7 @@ const Products = async () => {
           <ProductsList categories={categories} brands={brands} />
         </section>
       </div>
-      <CallToAction />
-      <Subscribe />
-    </main>
+    </>
   );
 };
 

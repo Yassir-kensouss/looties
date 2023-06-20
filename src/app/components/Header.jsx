@@ -18,6 +18,7 @@ import { AppContext } from "../layout";
 import { isAuthenticated } from "@/utils/helpers";
 import ProfileDropdown from "./ui-components/ProfileDropdown";
 import AuthContainer from "@/components/Auth/AuthContainer";
+import { usePathname } from "next/navigation";
 
 const products = [
   {
@@ -34,6 +35,8 @@ const callsToAction = [
 
 const Header = () => {
   const { cartItems, settings } = useContext(AppContext);
+
+  const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -136,7 +139,7 @@ const Header = () => {
         <div className="flex items-center gap-6 hidden lg:flex lg:flex-1 lg:justify-end">
           <SearchInput />
           <Link
-            href="/cart"
+            href={`/cart?path=${encodeURIComponent(pathname)}`}
             className="relative basic-btn"
             aria-label="shopping cart"
           >

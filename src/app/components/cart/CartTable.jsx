@@ -28,8 +28,10 @@ const CartTable = () => {
           <div
             role="table head"
             style={{ width: "5%" }}
-            className="flex items-center"
-          ></div>
+            className="flex items-center text-zinc-400"
+          >
+            <TrashIcon width={15} height={15} />
+          </div>
           <div role="table head" style={{ width: "65%" }}>
             <p className="uppercase text-xs text-zinc-400 font-semibold ml-1">
               Product

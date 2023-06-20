@@ -1,20 +1,51 @@
 "use client";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/app/layout";
 import { StarIcon } from "@heroicons/react/24/solid";
-import React, { useContext, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { addToCart } from "@/utils/helpers";
 
 const ProductDetails = ({ product }) => {
-  const { settings } = useContext(AppContext);
+  const searchParams = useSearchParams();
+
+  const { settings, setCartItems } = useContext(AppContext);
 
   const currency = settings.currency?.split("-")[1];
-
+  const [color, setColor] = useState(null);
+  const [size, setSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
+
   const reduceQuantity = () => {
     if (quantity === 1) {
       return;
     }
     setQuantity(quantity - 1);
   };
+
+  const selectColor = value => {
+    setColor(value);
+  };
+
+  const selectSize = value => {
+    setSize(value);
+  };
+
+  useEffect(() => {
+    const sizeQuery = searchParams.get("size");
+    const colorQuery = searchParams.get("color");
+    const qteQuery = searchParams.get("qte");
+
+    if (sizeQuery && colorQuery) {
+      setColor(colorQuery);
+      setSize(sizeQuery);
+      setQuantity(qteQuery);
+    } else {
+      const defaultColor = Object.keys(product.variants)[0];
+      setColor(defaultColor);
+      setSize(product.variants[defaultColor][0].size);
+    }
+  }, []);
+
   return (
     <div className="w-full lg:w-8/12 ">
       <div className="divide-y">
@@ -47,37 +78,38 @@ const ProductDetails = ({ product }) => {
         <div className="flex items-start gap-8 py-4">
           <div>
             <h4 className="mb-2 text-sm text-gray-800 font-medium">
-              Available Size
+              Available Colors
             </h4>
             <div className="flex items-center gap-2">
-              <span className="w-10 h-10 flex items-center justify-center capitalize rounded-lg border-2 cursor-pointer transition hover:bg-gray-800 hover:text-white hover:border-gray-800 border-zinc-200">
-                S
-              </span>
-              <span className="w-10 h-10 flex items-center justify-center capitalize rounded-lg border-2 cursor-pointer transition hover:bg-gray-800 hover:text-white hover:border-gray-800 border-zinc-200">
-                M
-              </span>
-              <span className="w-10 h-10 flex items-center justify-center capitalize rounded-lg border-2 cursor-pointer transition hover:bg-gray-800 hover:text-white hover:border-gray-800 border-zinc-200">
-                L
-              </span>
+              {Object.keys(product.variants).map(item => (
+                <span
+                  onClick={() => selectColor(item)}
+                  style={{ background: `#${item}` }}
+                  className={`${
+                    item === color ? "ring-2 ring-offset-1 ring-gray-700" : ""
+                  } w-10 h-10 flex items-center justify-center capitalize rounded-lg cursor-pointer transition hover:opacity-80`}
+                ></span>
+              ))}
             </div>
           </div>
           <div>
             <h4 className="mb-2 text-sm text-gray-800 font-medium">
-              Available Colors
+              Available Size
             </h4>
             <div className="flex items-center gap-2">
-              <span
-                style={{ background: "#db2777" }}
-                className="w-10 h-10 flex items-center justify-center capitalize rounded-lg cursor-pointer transition hover:opacity-80"
-              ></span>
-              <span
-                style={{ background: "#7e22ce" }}
-                className="w-10 h-10 flex items-center justify-center capitalize rounded-lg cursor-pointer transition hover:opacity-80"
-              ></span>
-              <span
-                style={{ background: "#0891b2" }}
-                className="w-10 h-10 flex items-center justify-center capitalize rounded-lg cursor-pointer transition hover:opacity-80"
-              ></span>
+              {color &&
+                product.variants[color].map(item => (
+                  <span
+                    onClick={() => selectSize(item.size)}
+                    className={`${
+                      size === item.size
+                        ? "ring-2 ring-offset-1 ring-gray-700 text-white bg-gray-800"
+                        : ""
+                    } w-10 h-10 flex items-center justify-center capitalize rounded-lg border-2 cursor-pointer transition hover:bg-gray-800 hover:text-white hover:border-gray-800 border-zinc-200`}
+                  >
+                    {item.size}
+                  </span>
+                ))}
             </div>
           </div>
         </div>
@@ -103,7 +135,12 @@ const ProductDetails = ({ product }) => {
               </button>
             </div>
             <div>
-              <button className="bg-gray-800 text-white rounded-lg p-3 text-sm">
+              <button
+                onClick={e =>
+                  addToCart(e, size, color, quantity, product, setCartItems)
+                }
+                className="hover:bg-gray-700 active:bg-gray-800 focus:ring-2 ring-offset-1 ring-gray-300 bg-gray-800 text-white rounded-lg p-3 text-sm"
+              >
                 Add to cart
               </button>
             </div>

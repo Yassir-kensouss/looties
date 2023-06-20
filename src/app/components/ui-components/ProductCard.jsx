@@ -1,4 +1,5 @@
 import { AppContext } from "@/app/layout";
+import { addToCart } from "@/utils/helpers";
 import { Transition } from "@headlessui/react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -29,64 +30,6 @@ const ProductCard = props => {
   const [sizes, setSizes] = useState([]);
 
   const { setCartItems } = useContext(AppContext);
-
-  const addToCart = e => {
-    e.stopPropagation();
-
-    // Force the user to choose color and size first
-    if ((!size || !color) && Object(product.variants).length > 0) {
-      toast.error("Please ensure the appropriate color and size are chosen.");
-      return;
-    }
-
-    let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    const variantPrice = product.variants[color].find(el => el.size === size);
-
-    const cartProduct = {
-      vid: uniqid(),
-      productId: product._id,
-      photos: product.photos,
-      name: product.name,
-      price:
-        Object.keys(product.variants).length > 0
-          ? variantPrice?.price
-          : product.price,
-      originalPrice:
-        Object.keys(product.variants).length > 0
-          ? variantPrice?.price
-          : product.price,
-      size: size,
-      color: color,
-      quantity: 1,
-    };
-
-    // check if cart already contain the added product
-    const _vr =
-      cartItems.find(
-        el =>
-          el.size === cartProduct.size &&
-          el.color === cartProduct.color &&
-          el._id === cartProduct._id
-      ) || {};
-
-    // Increase the quantity, If the product already exist in the cart with same variants
-    if (Object.keys(_vr).length > 0) {
-      const newCartContent = cartItems.filter(
-        el =>
-          el.size !== cartProduct.size &&
-          el.color !== cartProduct.color &&
-          el._id !== cartProduct._id
-      );
-      _vr.quantity = _vr.quantity + 1;
-      const items = [_vr, ...newCartContent];
-      setCartItems(items);
-      localStorage.setItem("cart", JSON.stringify(items));
-    } else {
-      const items = [cartProduct, ...cartItems];
-      setCartItems(items);
-      localStorage.setItem("cart", JSON.stringify(items));
-    }
-  };
 
   return (
     <div
@@ -153,7 +96,7 @@ const ProductCard = props => {
       <div className="flex items-start justify-between mt-4">
         <div className="w-4/6">
           <Link
-            href={`/products/${product._id}`}
+            href={`/product/${product._id}`}
             className="cursor-pointer hover:opacity-80 transition"
           >
             <h3
@@ -173,7 +116,7 @@ const ProductCard = props => {
           </div>
         </div>
         <button
-          onClick={addToCart}
+          onClick={e => addToCart(e, size, color, 1, product, setCartItems)}
           aria-label="add to cart"
           data-product={product._id}
           className={`${

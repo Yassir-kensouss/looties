@@ -13,7 +13,7 @@ const CartTableItems = ({ item, setItems }) => {
   const removeCartItem = () => {
     // Update localstorage cart items
     const items = JSON.parse(localStorage.getItem("cart"));
-    const newItems = items.filter(el => el._id !== item._id);
+    const newItems = items.filter(el => el.vid !== item.vid);
     localStorage.setItem("cart", JSON.stringify(newItems));
     setItems(newItems);
     setCartItems(newItems);
@@ -45,7 +45,7 @@ const CartTableItems = ({ item, setItems }) => {
           className="flex items-center ml-1"
         >
           <button
-            onClick={removeCartItem}
+            onClick={() => removeCartItem()}
             className="flex items-center gap-2 font-medium p-2 rounded-lg transition text-sm active:bg-zinc-100 focus:outline focus:outline-zinc-300 hover:bg-zinc-50"
           >
             <TrashIcon width={15} height={15} />
@@ -62,7 +62,9 @@ const CartTableItems = ({ item, setItems }) => {
               />
             </div>
             <div>
-              <Link href={`/products/${item.productId}`}>
+              <Link
+                href={`/product/${item.productId}?color=${item.color}&size=${item.size}&qte=${quantity}`}
+              >
                 <h5 className="text-md mb-1 text-gray-800 font-medium w-52 text-ellipsis whitespace-nowrap overflow-hidden">
                   {item.name}
                 </h5>
