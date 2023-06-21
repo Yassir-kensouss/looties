@@ -1,23 +1,27 @@
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
+import { AppContext } from "../layout";
 
 const Footer = () => {
   const year = new Date().getFullYear();
+
+  const { cartItems, settings } = useContext(AppContext);
 
   return (
     <footer className="bg-slate-100">
       <div className="mx-auto max-w-7xl py-10 lg:px-8 border-b-2">
         <div className="flex lg:flex-row flex-col lg:items-center items-start px-4 lg:p-0">
           <div className="lg:w-2/6 w-full mb-6 lg:mb-0">
-            <img
-              alt="test"
+            <Image
+              alt={settings.websiteTitle}
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              src={settings.brand}
+              width="40"
+              height="40"
             />
-            <p className="text-slate-400 font-medium mt-4 text-sm">
-              Components in the Client Component module graph are primarily
-              rendered on the client.
+            <p className="text-slate-400 leading-7 w-5/6 mt-4 text-sm">
+              {settings.websiteDescription}
             </p>
           </div>
           <div className="flex lg:flex-row flex-col items-start w-4/6	justify-evenly">

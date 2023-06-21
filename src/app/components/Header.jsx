@@ -52,7 +52,13 @@ const Header = () => {
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src={settings.brand} alt="brand name" />
+            <Image
+              alt={settings.websiteTitle}
+              className="h-8 w-auto"
+              src={settings.brand}
+              width="40"
+              height="40"
+            />
           </a>
         </div>
         <div className="flex lg:hidden">
