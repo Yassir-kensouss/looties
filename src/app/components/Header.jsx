@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -7,11 +7,7 @@ import {
   ShoppingCartIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import SearchInput from "./inputs/SearchInput";
 import { AppContext } from "../layout";
@@ -19,18 +15,17 @@ import { isAuthenticated } from "@/utils/helpers";
 import ProfileDropdown from "./ui-components/ProfileDropdown";
 import AuthContainer from "@/components/Auth/AuthContainer";
 import { usePathname } from "next/navigation";
+import { useQuery } from "react-query";
+import { fetchCategories } from "@/services/categories";
+import Image from "next/image";
 
 const products = [
   {
-    name: "Products list",
+    name: "Products",
     description: "Browse our latest products",
     href: "/products",
     icon: ShoppingBagIcon,
   },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
 const Header = () => {
@@ -39,6 +34,14 @@ const Header = () => {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  const { isLoading } = useQuery("fetch-categories", async () => {
+    const response = await fetchCategories();
+    const data = await response.data.categories;
+    setCategories(data);
+    return data;
+  });
 
   return (
     <header className="bg-white fixed top-0 left-0 w-full z-10">
@@ -65,7 +68,7 @@ const Header = () => {
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
+              Shop
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
                 aria-hidden="true"
@@ -82,7 +85,7 @@ const Header = () => {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
+                <div className="p-4 h-96 overflow-auto">
                   {products.map(item => (
                     <div
                       key={item.name}
@@ -106,35 +109,55 @@ const Header = () => {
                       </div>
                     </div>
                   ))}
-                </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                  {callsToAction.map(item => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                  {categories.map(category => (
+                    <div
+                      key={category.label}
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                     >
-                      <item.icon
-                        className="h-5 w-5 flex-none text-gray-400"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
+                      <div className="relative flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <Image
+                          fill
+                          src={category.image}
+                          className="block w-full h-full object-cover rounded-md"
+                        />
+                      </div>
+                      <div className="flex-auto">
+                        <Link
+                          href={`/products?category=${category.name}`}
+                          className="block font-semibold text-gray-900"
+                        >
+                          {category.name}
+                          <span className="absolute inset-0" />
+                        </Link>
+                        <p className="mt-1 text-gray-600">
+                          Browse our latest products
+                        </p>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </Popover.Panel>
             </Transition>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </a>
+          <Link
+            href="/most-wanted"
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            Most wanted
+          </Link>
+          <Link
+            href="/new-arrival"
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            New arrival
+          </Link>
+          <Link
+            href="/brands"
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            Brands
+          </Link>
         </Popover.Group>
         <div className="flex items-center gap-6 hidden lg:flex lg:flex-1 lg:justify-end">
           <SearchInput />

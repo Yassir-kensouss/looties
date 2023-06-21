@@ -5,9 +5,6 @@ import Pagination from "../Pagination";
 import { fetchProductsByFilter } from "@/services/products";
 import { AppContext } from "@/app/layout";
 import { PRODUCTS_LIMIT } from "@/utils/constants";
-import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
-import ProductsListSkeleton from "@/components/loading skeletons/ProductsListSkeleton";
-import BrandsSkeleton from "../ui-components/skeletons/Brands";
 
 const ProductsItems = ({ total, setTotal }) => {
   const [products, setProducts] = useState([]);
@@ -36,26 +33,6 @@ const ProductsItems = ({ total, setTotal }) => {
     setLoading(true);
     getProducts(filters, currentPage);
   }, [filters, currentPage]);
-
-  // if (loading) {
-  //   return <BrandsSkeleton />;
-  // }
-
-  // if (!products || (products.length === 0 && !loading)) {
-  //   return (
-  //     <div className="mt-20 flex flex-col gap-1 items-center justify-center w-full">
-  //       <ArchiveBoxXMarkIcon
-  //         className="text-indigo-500"
-  //         width={45}
-  //         height={45}
-  //       />
-  //       <h3 className="text-xl font-medium">Product Unavailable</h3>
-  //       <p className="text-gray-500 w-2/6 text-center">
-  //         There are no products available in the selected category
-  //       </p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <>
