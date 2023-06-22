@@ -20,8 +20,8 @@ const ProfileDropdown = () => {
       enabled: false,
       refetchOnWindowFocus: false,
       onSuccess: () => {
-        localStorage.removeItem("jwt_data");
-        router.refresh();
+        localStorage.removeItem("lotie_jwt_data");
+        router.push("/");
       },
     }
   );

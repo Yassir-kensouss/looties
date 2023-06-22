@@ -6,7 +6,16 @@ import AuthAddress from "./AuthAddress";
 import { signupValidation } from "@/utils/validations";
 
 const SignUp = props => {
-  const { submit, isLoading, auth, setAuth, phone, setPhone } = props;
+  const {
+    setCountry,
+    country,
+    submit,
+    isLoading,
+    auth,
+    setAuth,
+    phone,
+    setPhone,
+  } = props;
 
   const [step, setStep] = useState("personal");
 
@@ -32,6 +41,8 @@ const SignUp = props => {
                 setStep={setStep}
                 isValid={isValid}
                 isLoading={isLoading}
+                setCountry={setCountry}
+                country={country}
               />
             )}
           </Form>

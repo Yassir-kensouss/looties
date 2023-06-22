@@ -1,18 +1,44 @@
+import countryList from "react-select-country-list";
+import CustomCombobox from "@/app/components/ui-components/Combobox";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { ErrorMessage, Field } from "formik";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 const AuthAddress = props => {
-  const { isLoading, setStep, isValid, phone, setPhone } = props;
+  const { isLoading, setStep, isValid, phone, setPhone, setCountry, country } =
+    props;
 
   const prevStep = () => {
     setStep("personal");
   };
 
+  const countries = useMemo(
+    () =>
+      countryList()
+        .getData()
+        .map((country, index) => {
+          return {
+            ...country,
+            name: country.label,
+            unavailable: false,
+            index: index,
+          };
+        }),
+    []
+  );
+
   return (
     <div className="pb-14">
+      <div className="pb-6">
+        <label className="font-medium text-zinc-500">Country</label>
+        <CustomCombobox
+          options={countries}
+          setSelected={setCountry}
+          selected={country}
+        />
+      </div>
       <label htmlFor="address" className="block text-sm">
         <span className="font-medium text-zinc-500">
           Street name and house number

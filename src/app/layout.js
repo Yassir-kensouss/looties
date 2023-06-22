@@ -20,6 +20,7 @@ export const AppContext = createContext(null);
 
 export default function RootLayout({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [checkoutData, setCheckoutData] = useState({});
   const [settings, setSettings] = useState({});
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState({
@@ -62,6 +63,8 @@ export default function RootLayout({ children }) {
     filters,
     profile,
     setProfile,
+    setCheckoutData,
+    checkoutData,
   };
 
   return (

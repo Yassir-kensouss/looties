@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const CheckoutPreview = () => {
   return (
-    <div className="w-full lg:w-2/5 border border-zinc-200 rounded-lg p-6">
+    <>
       <h3 className="mb-3 text-base font-semibold text-gray-800">Your Order</h3>
       <div className="divide-y">
         <div className="flex items-start gap-4 pb-6">
@@ -108,12 +108,9 @@ const CheckoutPreview = () => {
             </div>
             <div className="font-semibold text-gray-800 text-lg">$2,522.50</div>
           </li>
-          <button className="bg-gray-800 rounded-lg text-white p-3 w-full mt-4 transition hover:bg-gray-700 active:bg-gray-900 focus:outline focus:outline-zinc-300">
-            Continue to payment
-          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

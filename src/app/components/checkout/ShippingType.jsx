@@ -1,37 +1,21 @@
 "use client";
 import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
+import { SHIPPING_PLANS } from "@/utils/constants";
 
-const plans = [
-  {
-    name: "Free shipping",
-    price: "$0",
-    description: "7-30 business days",
-  },
-  {
-    name: "Business",
-    price: "$7.50",
-    description: "3-14 business days",
-  },
-  {
-    name: "Enterprise",
-    price: "$22.50",
-    description: "1-3 business days",
-  },
-];
+const ShippingType = ({ shipping, setShipping }) => {
+  console.log("shipping", shipping);
 
-const ShippingType = () => {
-  const [selected, setSelected] = useState(plans[0]);
   return (
     <div className="w-full border border-zinc-200 rounded-lg p-6 mt-4">
       <h3 className="mb-3 text-base font-semibold text-gray-800">
         Shipping method
       </h3>
       <div>
-        <RadioGroup value={selected} onChange={setSelected}>
+        <RadioGroup value={shipping} onChange={setShipping}>
           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
           <div className="space-y-2">
-            {plans.map(plan => (
+            {SHIPPING_PLANS.map(plan => (
               <RadioGroup.Option
                 key={plan.name}
                 value={plan}

@@ -7,8 +7,26 @@ const SIZES = [
   { value: "XXL", label: "XXL" },
 ];
 
+const SHIPPING_PLANS = [
+  {
+    name: "Free shipping",
+    price: "$0",
+    description: "7-30 business days",
+  },
+  {
+    name: "Business",
+    price: "$7.50",
+    description: "3-14 business days",
+  },
+  {
+    name: "Enterprise",
+    price: "$22.50",
+    description: "1-3 business days",
+  },
+];
+
 const PRODUCTS_LIMIT = 9;
 
 const AUTH_TYPE = ["sign in", "sign up"];
 
-export { SIZES, PRODUCTS_LIMIT, AUTH_TYPE };
+export { SIZES, PRODUCTS_LIMIT, AUTH_TYPE, SHIPPING_PLANS };

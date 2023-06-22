@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { useMutation } from "react-query";
@@ -8,10 +8,28 @@ import { signin, signup } from "@/services/auth";
 import { AUTH_TYPE } from "@/utils/constants";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import countryList from "react-select-country-list";
 
 const AuthContainer = ({ isOpen, setIsOpen }) => {
   const [auth, setAuth] = useState(AUTH_TYPE[0]);
   const [phone, setPhone] = useState(null);
+
+  const countries = useMemo(
+    () =>
+      countryList()
+        .getData()
+        .map((country, index) => {
+          return {
+            ...country,
+            name: country.label,
+            unavailable: false,
+            index: index,
+          };
+        }),
+    []
+  );
+
+  const [country, setCountry] = useState(countries[0]);
 
   const router = useRouter();
 
@@ -32,7 +50,6 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
 
   const signupQuery = useMutation(data => signup(data), {
     onSuccess: data => {
-      localStorage.setItem("jwt_data", JSON.stringify(data.data));
       router.refresh();
       setIsOpen(false);
     },
@@ -53,7 +70,7 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
       mobile: phone,
       role: 0,
       address: {
-        country: values.country,
+        country: country,
         city: values.city,
         state: values.state,
         zipCode: values.postal_code,
@@ -119,6 +136,8 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
                             submit={signUp}
                             phone={phone}
                             setPhone={setPhone}
+                            setCountry={setCountry}
+                            country={country}
                           />
                         )}
                       </div>

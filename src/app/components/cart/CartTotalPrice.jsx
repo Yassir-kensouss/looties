@@ -1,5 +1,7 @@
 "use client";
 import { AppContext } from "@/app/layout";
+import AuthContainer from "@/components/Auth/AuthContainer";
+import { isAuthenticated } from "@/utils/helpers";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -7,6 +9,11 @@ const CartTotalPrice = () => {
   const { total, setTotal, cartItems } = useContext(AppContext);
 
   const [itemsLen, setItemsLen] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleAuthDialog = () => {
+    setIsOpen(true);
+  };
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -53,16 +60,32 @@ const CartTotalPrice = () => {
               </div>
             </li>
           </ul>
-          {itemsLen > 0 ? (
-            <Link
-              href="/checkout"
-              className="w-full block text-center transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white"
-            >
-              Checkout now
-            </Link>
-          ) : null}
+          {isAuthenticated() && isAuthenticated().user ? (
+            <>
+              {itemsLen > 0 ? (
+                <Link
+                  href="/checkout"
+                  className="w-full block text-center transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white"
+                >
+                  Checkout now
+                </Link>
+              ) : null}
+            </>
+          ) : (
+            <>
+              {itemsLen > 0 ? (
+                <button
+                  onClick={() => handleAuthDialog()}
+                  className="w-full block text-center transition hover:bg-gray-700 active:bg-gray-800 focus:outline focus:outline-zinc-400 p-2 bg-gray-800 rounded-lg font-medium text-white"
+                >
+                  Checkout now
+                </button>
+              ) : null}
+            </>
+          )}
         </div>
       </div>
+      <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

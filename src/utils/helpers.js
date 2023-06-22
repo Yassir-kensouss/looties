@@ -2,7 +2,10 @@ import { toast } from "react-hot-toast";
 import uniqid from "uniqid";
 
 export const isAuthenticated = () => {
-  const jwt = localStorage.getItem("jwt_data");
+  const jwt =
+    typeof window !== "undefined"
+      ? localStorage.getItem("lotie_jwt_data")
+      : false;
 
   if (jwt) {
     return JSON.parse(jwt);
