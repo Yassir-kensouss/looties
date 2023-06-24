@@ -1,4 +1,6 @@
 "use client";
+import PaymentShippingDetails from "@/components/Payment/PaymentShippingDetails";
+import PaymentForm from "@/components/Payment/paymentForm";
 import { getBraintreeToken } from "@/services/payment";
 import { isAuthenticated } from "@/utils/helpers";
 import React from "react";
@@ -12,14 +14,17 @@ const _getBraintreeToken = async () => {
 const Payment = async () => {
   const braintreeToken = await _getBraintreeToken();
 
-  console.log("braintreeToken", braintreeToken);
-
   return (
     <div>
       <div className="flex flex-col lg:flex-row items-start gap-8 mt-8">
-        <div className="w-full lg:w-4/6">payment form</div>
+        <div className="w-full lg:w-4/6">
+          <h4 className="text-md text-gray-700 font-regular">
+            Choose way to pay
+          </h4>
+          <PaymentForm braintreeData={braintreeToken.data} />
+        </div>
         <div className="w-full lg:w-2/5 border border-zinc-200 rounded-lg p-6">
-          total and shipping method
+          <PaymentShippingDetails />
         </div>
       </div>
     </div>
