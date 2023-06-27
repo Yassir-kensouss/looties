@@ -11,3 +11,16 @@ export const getBraintreeToken = (userId, token) => {
     url: `/braintree/getToken/${userId}`,
   });
 };
+
+export const paymentProcess = (userId, token, paymentData) => {
+  return auth({
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    url: `/braintree/purchase/${userId}`,
+    data: JSON.stringify(paymentData),
+  });
+};
