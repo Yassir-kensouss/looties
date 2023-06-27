@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import BreadCrumbs from "../components/ui-components/BreadCrumbs";
 import CheckoutPreview from "../components/checkout/CheckoutPreview";
 import { Form, Formik } from "formik";
@@ -11,6 +11,8 @@ import CheckoutPersonalDetails from "../components/checkout/CheckoutPersonalDeta
 import { SHIPPING_PLANS } from "@/utils/constants";
 import { useRouter } from "next/navigation";
 import { AppContext } from "../layout";
+import { isAuthenticated } from "@/utils/helpers";
+import AuthContainer from "@/components/Auth/AuthContainer";
 
 const crumbs = [
   { link: "/", label: "Home" },
@@ -21,7 +23,12 @@ const crumbs = [
 const Checkout = () => {
   const router = useRouter();
 
+  useEffect(() => {
+    !isAuthenticated() ? router.push("/") : null;
+  }, []);
+
   const [shipping, setShipping] = useState(SHIPPING_PLANS[0]);
+  const [isOpen, setIsOpen] = useState(true);
 
   const { setCheckoutData, checkoutData } = useContext(AppContext);
 
@@ -70,7 +77,6 @@ const Checkout = () => {
   });
 
   const onSubmit = (values, { setSubmitting }) => {
-    alert(JSON.stringify({ ...values, shipping }, null, 2));
     setCheckoutData({
       ...checkoutData,
       ...values,
@@ -83,46 +89,55 @@ const Checkout = () => {
   return (
     <main className="mx-auto max-w-7xl p-6 lg:px-8">
       <BreadCrumbs crumbs={crumbs} />
-      <Formik
-        initialValues={initialValues}
-        validationSchema={CheckoutSchema}
-        onSubmit={onSubmit}
-      >
-        <Form>
-          <div className="flex flex-col lg:flex-row items-start gap-8 mt-8">
-            <div className="w-full lg:w-4/6">
-              <div className="border border-zinc-200 rounded-lg p-6 divide-y">
-                <div className="pb-6">
-                  <h3 className="mb-3 text-base font-semibold text-gray-800">
-                    Select shipping country
-                  </h3>
-                  <CustomCombobox
-                    options={countries}
-                    setSelected={setCountry}
-                    selected={country}
-                  />
+      {isAuthenticated() ? (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={CheckoutSchema}
+          onSubmit={onSubmit}
+        >
+          <Form>
+            <div className="flex flex-col lg:flex-row items-start gap-8 mt-8">
+              <div className="w-full lg:w-4/6">
+                <div className="border border-zinc-200 rounded-lg p-6 divide-y">
+                  <div className="pb-6">
+                    <h3 className="mb-3 text-base font-semibold text-gray-800">
+                      Select shipping country
+                    </h3>
+                    <CustomCombobox
+                      options={countries}
+                      setSelected={setCountry}
+                      selected={country}
+                    />
+                  </div>
+                  <div className="pt-3">
+                    <h3 className="my-3 text-base font-semibold text-gray-800">
+                      Shipping address
+                    </h3>
+                    <CheckoutPersonalDetails />
+                  </div>
                 </div>
-                <div className="pt-3">
-                  <h3 className="my-3 text-base font-semibold text-gray-800">
-                    Shipping address
-                  </h3>
-                  <CheckoutPersonalDetails />
-                </div>
+                <ShippingType shipping={shipping} setShipping={setShipping} />
               </div>
-              <ShippingType shipping={shipping} setShipping={setShipping} />
+              <div className="w-full lg:w-2/5 border border-zinc-200 rounded-lg p-6">
+                <CheckoutPreview />
+                <button
+                  type="submit"
+                  className="bg-gray-800 rounded-lg text-white p-3 w-full mt-4 transition hover:bg-gray-700 active:bg-gray-900 focus:outline focus:outline-zinc-300"
+                >
+                  Continue to payment
+                </button>
+              </div>
             </div>
-            <div className="w-full lg:w-2/5 border border-zinc-200 rounded-lg p-6">
-              <CheckoutPreview />
-              <button
-                type="submit"
-                className="bg-gray-800 rounded-lg text-white p-3 w-full mt-4 transition hover:bg-gray-700 active:bg-gray-900 focus:outline focus:outline-zinc-300"
-              >
-                Continue to payment
-              </button>
-            </div>
-          </div>
-        </Form>
-      </Formik>
+          </Form>
+        </Formik>
+      ) : (
+        <>
+          <p className="mt-4 text-gray-900 text-4xl uppercase font-semibold h-48 flex items-center justify-center">
+            Sign up to checkout
+          </p>
+          <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
+        </>
+      )}
     </main>
   );
 };

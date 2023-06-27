@@ -1,10 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import { SHIPPING_PLANS } from "@/utils/constants";
+import { AppContext } from "@/app/layout";
 
 const ShippingType = ({ shipping, setShipping }) => {
-  console.log("shipping", shipping);
+  const { total, setTotal, setCheckoutData, checkoutData } =
+    useContext(AppContext);
+
+  const handleShippingPlan = data => {
+    setShipping(data);
+    setTotal({
+      ...total,
+      grandTotal: total.total + data.priceVal,
+    });
+
+    setCheckoutData({
+      ...checkoutData,
+      shipping: data,
+    });
+  };
 
   return (
     <div className="w-full border border-zinc-200 rounded-lg p-6 mt-4">
@@ -12,7 +27,10 @@ const ShippingType = ({ shipping, setShipping }) => {
         Shipping method
       </h3>
       <div>
-        <RadioGroup value={shipping} onChange={setShipping}>
+        <RadioGroup
+          value={shipping}
+          onChange={data => handleShippingPlan(data)}
+        >
           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
           <div className="space-y-2">
             {SHIPPING_PLANS.map(plan => (

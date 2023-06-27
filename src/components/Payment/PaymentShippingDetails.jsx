@@ -1,8 +1,10 @@
 import { AppContext } from "@/app/layout";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import ShippingPlanDialog from "../Checkout/ShippingPlanDialog";
 
 const PaymentShippingDetails = () => {
   const { checkoutData, total } = useContext(AppContext);
+  let [isOpen, setIsOpen] = useState(false);
 
   return (
     <div>
@@ -20,7 +22,15 @@ const PaymentShippingDetails = () => {
           </li>
         </ul>
       </div>
-      <h4 className="text-gray-900 font-semibold mt-4 mb-3">Shipping:</h4>
+      <h4 className="flex items-center justify-between text-gray-900 font-semibold mt-4 mb-3">
+        Shipping:
+        <span
+          onClick={() => setIsOpen(true)}
+          className="font-normal text-sm cursor-pointer text-gray-700 hover:text-gray-600 active:text-gray-500"
+        >
+          Modify plan
+        </span>
+      </h4>
       <div className="flex justify-between w-full items-start bg-zinc-50 p-2 rounded-md">
         <div>
           <h5 className="text-sm font-regular text-gray-800 mb-2">
@@ -38,6 +48,7 @@ const PaymentShippingDetails = () => {
           ${total.grandTotal}
         </div>
       </div>
+      <ShippingPlanDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

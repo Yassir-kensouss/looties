@@ -1,9 +1,9 @@
 "use client";
+import React from "react";
 import PaymentShippingDetails from "@/components/Payment/PaymentShippingDetails";
 import PaymentForm from "@/components/Payment/paymentForm";
 import { getBraintreeToken } from "@/services/payment";
 import { isAuthenticated } from "@/utils/helpers";
-import React from "react";
 
 const _getBraintreeToken = async () => {
   const userData = isAuthenticated();
