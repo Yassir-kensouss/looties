@@ -20,7 +20,7 @@ const CategoryCard = props => {
       />
       <Link
         href={`/products?category=${label}`}
-        className="font-medium w-10/12 capitalize text-zinc-700 flex items-center justify-between bg-white hover:bg-zinc-50 hover:shadow-xl active:bg-zinc-100 transition rounded-lg p-4 z-20 absolute bottom-6 left-1/2 -translate-x-1/2"
+        className="font-medium w-10/12 capitalize text-zinc-700 flex items-center justify-between bg-white hover:bg-zinc-50 hover:shadow-xl active:bg-zinc-100 transition rounded-lg p-4 z-10 absolute bottom-6 left-1/2 -translate-x-1/2"
       >
         <span>{label}</span>
         <ArrowRightIcon width={22} height={22} />

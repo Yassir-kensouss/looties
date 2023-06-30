@@ -26,6 +26,7 @@ const ProductCard = props => {
   const [size, setSize] = useState(null);
   const [color, setColor] = useState(null);
   const [sizes, setSizes] = useState([]);
+  const [vPrice, setVPrice] = useState(price);
 
   const { setCartItems } = useContext(AppContext);
 
@@ -86,6 +87,7 @@ const ProductCard = props => {
                 setColor={setColor}
                 setSizes={setSizes}
                 sizes={sizes}
+                setVPrice={setVPrice}
               />
             </div>
           </Transition>
@@ -106,7 +108,7 @@ const ProductCard = props => {
           </Link>
           <div className="flex items-start gap-2">
             <span className={`${priceSize} text-gray-800 font-semibold`}>
-              ${price}
+              ${vPrice}
             </span>
             {oldPrice ? (
               <del className={`${oldPriceSize} text-gray-400`}>${oldPrice}</del>
@@ -140,7 +142,14 @@ const ProductVariant = ({
   setColor,
   sizes,
   setSizes,
+  setVPrice,
 }) => {
+  const handleVPrice = el => {
+    const _vprice = variants[color].find(v => v.size === el);
+    setVPrice(_vprice.price);
+    setSize(el);
+  };
+
   const selectVariantColor = e => {
     e.stopPropagation();
 
@@ -177,7 +186,7 @@ const ProductVariant = ({
             <div
               key={el}
               tabIndex="0"
-              onClick={() => setSize(el)}
+              onClick={() => handleVPrice(el)}
               className={`${
                 size === el ? "bg-gray-700 text-white" : ""
               } w-10 h-10 rounded-lg cursor-pointer text-sm uppercase flex items-center justify-center font-semibold border-2 border-gray-800`}

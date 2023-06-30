@@ -44,7 +44,7 @@ const Header = () => {
   });
 
   return (
-    <header className="bg-white fixed top-0 left-0 w-full z-10">
+    <header className="bg-white fixed top-0 left-0 w-full z-20">
       <nav
         className="mx-auto gap-5 flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"

@@ -94,7 +94,7 @@ const Hero = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="absolute top-5 right-5 z-30">
+          <div className="absolute top-5 right-5 z-10">
             <button
               disabled={sliderStart}
               ref={navigationNextRef}

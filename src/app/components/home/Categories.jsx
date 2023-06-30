@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import CategoryCard from "../ui-components/CategoryCard";
 import { useQuery } from "react-query";
 import { fetchCategories } from "@/services/categories";
 import CategoriesSkeleton from "../ui-components/skeletons/Categories";
 
 const Categories = () => {
-  const [categories, setCategories] = useState([]);
-
-  const { isLoading } = useQuery("fetch-categories", async () => {
+  const { isLoading, data } = useQuery("fetch-categories-home", async () => {
     const response = await fetchCategories();
     const data = await response.data.categories;
-    setCategories(data);
     return data;
   });
 
@@ -24,7 +21,7 @@ const Categories = () => {
         <CategoriesSkeleton className="mt-10" />
       ) : (
         <div className="mt-10 flex flex-col lg:flex-row items-center justify-between gap-4">
-          {categories.map(category => (
+          {data.map(category => (
             <CategoryCard
               key={category._id}
               label={category.name}

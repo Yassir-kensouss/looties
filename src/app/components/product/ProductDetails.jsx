@@ -13,6 +13,7 @@ const ProductDetails = ({ product }) => {
   const currency = settings.currency?.split("-")[1];
   const [color, setColor] = useState(null);
   const [size, setSize] = useState(null);
+  const [vPrice, setVPrice] = useState(product.price);
   const [quantity, setQuantity] = useState(1);
 
   const reduceQuantity = () => {
@@ -46,6 +47,12 @@ const ProductDetails = ({ product }) => {
     }
   }, []);
 
+  const handleVPrice = el => {
+    const newPrice = product.variants[color].find(v => v.size === el);
+    setVPrice(newPrice.price);
+    setSize(el);
+  };
+
   return (
     <div className="w-full lg:w-8/12 ">
       <div className="divide-y">
@@ -65,7 +72,7 @@ const ProductDetails = ({ product }) => {
           <div className="flex gap-3">
             <p className="text-xl font-semibold text-gray-700">
               {currency}
-              {product.price}
+              {vPrice}
             </p>
             <p className="text-sm font-medium text-gray-400">
               <del>
@@ -100,7 +107,7 @@ const ProductDetails = ({ product }) => {
               {color &&
                 product.variants[color].map(item => (
                   <span
-                    onClick={() => selectSize(item.size)}
+                    onClick={() => handleVPrice(item.size)}
                     className={`${
                       size === item.size
                         ? "ring-2 ring-offset-1 ring-gray-700 text-white bg-gray-800"
