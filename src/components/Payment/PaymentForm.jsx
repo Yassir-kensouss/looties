@@ -8,7 +8,7 @@ import { AppContext } from "@/app/layout";
 import { useRouter } from "next/navigation";
 
 const PaymentForm = ({ braintreeData }) => {
-  const { checkoutData } = useContext(AppContext);
+  const { checkoutData, setCartItems } = useContext(AppContext);
 
   const router = useRouter();
 
@@ -50,6 +50,7 @@ const PaymentForm = ({ braintreeData }) => {
               products: cartItems,
               transaction_id: res.data.transaction.id,
               totalPrice: parseFloat(res.data.transaction.amount),
+              shipping: checkoutData.shipping,
               address: {
                 address: checkoutData.address,
                 state: checkoutData.state,
@@ -62,7 +63,9 @@ const PaymentForm = ({ braintreeData }) => {
             setOrderLoading(true);
             createOrder(userId, orderData)
               .then(res => {
-                router.push("/");
+                router.push("/success");
+                localStorage.setItem("cart", JSON.stringify([]));
+                setCartItems([]);
                 setOrderLoading(false);
               })
               .catch(err => {
