@@ -18,7 +18,7 @@ const ProductReviews = ({ reviews = [], isLoading }) => {
           {isLoading ? (
             <ReviewsSkeleton className="mt-8" />
           ) : (
-            <div className="grid grid-cols-2 gap-12 mt-8">
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-12 mt-8">
               {reviews.map(review => (
                 <ProductReview
                   rating={review.rating}

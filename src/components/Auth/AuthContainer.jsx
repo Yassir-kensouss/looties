@@ -82,7 +82,7 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-30" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -111,7 +111,10 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
                   className="transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all"
                 >
                   <div className="flex h-full">
-                    <div style={{ height: "500px" }} className="relative w-1/3">
+                    <div
+                      style={{ height: "500px" }}
+                      className="hidden lg:block relative w-1/3"
+                    >
                       <Image
                         className="w-full h-full block object-cover"
                         fill
@@ -119,8 +122,8 @@ const AuthContainer = ({ isOpen, setIsOpen }) => {
                         src="/assets/signup-bg.jpg"
                       />
                     </div>
-                    <div className="overflow-auto flex w-2/3">
-                      <div className="w-full p-14 overflow-auto">
+                    <div className="overflow-auto flex w-full lg:w-2/3">
+                      <div className="w-full lg:p-14 p-6 overflow-auto">
                         {auth === AUTH_TYPE[0] ? (
                           <SignIn
                             auth={auth}

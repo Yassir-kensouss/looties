@@ -7,7 +7,7 @@ const ProductReview = props => {
   const rate = [1, 2, 3, 4, 5];
   return (
     <div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center flex-wrap lg:flex-nowrap gap-3">
         <div className="flex items-center gap-1 my-2">
           {rate.map(el => (
             <StarIcon
