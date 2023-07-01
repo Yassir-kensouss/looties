@@ -106,27 +106,36 @@ const ProductCard = props => {
               {title}
             </h3>
           </Link>
-          <div className="flex items-start gap-2">
-            <span className={`${priceSize} text-gray-800 font-semibold`}>
-              ${vPrice}
-            </span>
-            {oldPrice ? (
-              <del className={`${oldPriceSize} text-gray-400`}>${oldPrice}</del>
+          <div className="flex items-center gap-4">
+            <div className="flex items-start gap-2">
+              <span className={`${priceSize} text-gray-800 font-semibold`}>
+                ${vPrice}
+              </span>
+              {oldPrice ? (
+                <del className={`${oldPriceSize} text-gray-400`}>
+                  ${oldPrice}
+                </del>
+              ) : null}
+            </div>
+            {!product.stock ? (
+              <p className="text-red-600 text-sm font-semibold">Out of stock</p>
             ) : null}
           </div>
         </div>
-        <button
-          onClick={e => addToCart(e, size, color, 1, product, setCartItems)}
-          aria-label="add to cart"
-          data-product={product._id}
-          className={`${
-            !size || !color
-              ? "bg-gray-500 hover:bg-gray-500 active:bg-gray-500"
-              : ""
-          } rounded-lg text-white bg-gray-700 hover:bg-gray-600 active:bg-gray-800 min-w-12 min-h-12 w-12 h-12 flex items-center justify-center mr-0 ${addToCartBtnMargin}`}
-        >
-          <ShoppingCartIcon width="100%" height={22} />
-        </button>
+        {product.stock ? (
+          <button
+            onClick={e => addToCart(e, size, color, 1, product, setCartItems)}
+            aria-label="add to cart"
+            data-product={product._id}
+            className={`${
+              !size || !color
+                ? "bg-gray-500 hover:bg-gray-500 active:bg-gray-500"
+                : ""
+            } rounded-lg text-white bg-gray-700 hover:bg-gray-600 active:bg-gray-800 min-w-12 min-h-12 w-12 h-12 flex items-center justify-center mr-0 ${addToCartBtnMargin}`}
+          >
+            <ShoppingCartIcon width="100%" height={22} />
+          </button>
+        ) : null}
       </div>
     </div>
   );

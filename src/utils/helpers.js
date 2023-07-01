@@ -31,6 +31,7 @@ export const addToCart = (e, size, color, quantity, product, setCartItems) => {
     productId: product._id,
     photos: product.photos,
     name: product.name,
+    stockQte: product.quantity,
     price:
       Object.keys(product.variants).length > 0
         ? variantPrice?.price

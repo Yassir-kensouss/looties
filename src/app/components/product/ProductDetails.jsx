@@ -61,13 +61,18 @@ const ProductDetails = ({ product }) => {
           <p className="py-2 text-sm text-gray-700 w-4/5">
             {product.shortDescription}
           </p>
-          <div className="flex items-center gap-1 my-2">
-            <StarIcon width={17} height={17} className="text-amber-400" />
-            <StarIcon width={17} height={17} className="text-amber-400" />
-            <StarIcon width={17} height={17} className="text-amber-400" />
-            <StarIcon width={17} height={17} className="text-amber-400" />
-            <StarIcon width={17} height={17} className="text-gray-200" />
-            <span className="text-sm">(5)</span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 my-2">
+              <StarIcon width={17} height={17} className="text-amber-400" />
+              <StarIcon width={17} height={17} className="text-amber-400" />
+              <StarIcon width={17} height={17} className="text-amber-400" />
+              <StarIcon width={17} height={17} className="text-amber-400" />
+              <StarIcon width={17} height={17} className="text-gray-200" />
+              <span className="text-sm">(5)</span>
+            </div>
+            {!product.stock ? (
+              <p className="text-red-600 text-sm font-semibold">Out of stock</p>
+            ) : null}
           </div>
           <div className="flex gap-3">
             <p className="text-xl font-semibold text-gray-700">
@@ -121,37 +126,42 @@ const ProductDetails = ({ product }) => {
           </div>
         </div>
         <div className="py-4">
-          <p className="mb-2 text-sm">
-            <span className="font-semibold">Last one left</span> - make it
-            yours!
-          </p>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 p-2 border border-zinc-200 rounded-lg w-fit">
-              <button
-                onClick={reduceQuantity}
-                className="pl-2 pr-2 hover:opacity-80 transition"
-              >
-                -
-              </button>
-              <span className="w-18">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="pl-2 pr-2 hover:opacity-80 transition"
-              >
-                +
-              </button>
+          {product.quantity === 1 ? (
+            <p className="mb-2 text-sm">
+              <span className="font-semibold">Last one left</span> - make it
+              yours!
+            </p>
+          ) : null}
+
+          {product.stock ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2 border border-zinc-200 rounded-lg w-fit">
+                <button
+                  onClick={reduceQuantity}
+                  className="pl-2 pr-2 hover:opacity-80 transition"
+                >
+                  -
+                </button>
+                <span className="w-18">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="pl-2 pr-2 hover:opacity-80 transition"
+                >
+                  +
+                </button>
+              </div>
+              <div>
+                <button
+                  onClick={e =>
+                    addToCart(e, size, color, quantity, product, setCartItems)
+                  }
+                  className="hover:bg-gray-700 active:bg-gray-800 focus:ring-2 ring-offset-1 ring-gray-300 bg-gray-800 text-white rounded-lg p-3 text-sm"
+                >
+                  Add to cart
+                </button>
+              </div>
             </div>
-            <div>
-              <button
-                onClick={e =>
-                  addToCart(e, size, color, quantity, product, setCartItems)
-                }
-                className="hover:bg-gray-700 active:bg-gray-800 focus:ring-2 ring-offset-1 ring-gray-300 bg-gray-800 text-white rounded-lg p-3 text-sm"
-              >
-                Add to cart
-              </button>
-            </div>
-          </div>
+          ) : null}
         </div>
       </div>
     </div>
