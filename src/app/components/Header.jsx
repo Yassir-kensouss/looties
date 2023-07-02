@@ -3,8 +3,6 @@ import { Fragment, useContext, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  PhoneIcon,
-  PlayCircleIcon,
   ShoppingBagIcon,
   ShoppingCartIcon,
   UserIcon,
@@ -354,23 +352,25 @@ const Header = () => {
                     <Link
                       onClick={() => setMobileMenuOpen(false)}
                       href={`/cart?path=${encodeURIComponent(pathname)}`}
-                      className="relative flex items-center gap-4 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      className="flex items-center gap-4 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                       aria-label="shopping cart"
                     >
-                      {cartItems?.length > 0 ? (
-                        <div
-                          aria-label="shopping cart badge"
-                          className="absolute -top-1 -right-1 rounded-lg w-5 h-5 flex items-center justify-center bg-violet-500 text-white font-semibold text-xs"
-                        >
-                          {cartItems?.length}
-                        </div>
-                      ) : null}
                       <ShoppingCartIcon
                         width={20}
                         height={20}
                         aria-hidden="true"
                       />
-                      Cart
+                      <div className="relative">
+                        Cart
+                        {cartItems?.length > 0 ? (
+                          <div
+                            aria-label="shopping cart badge"
+                            className="absolute -top-4 -right-4 rounded-lg w-5 h-5 flex items-center justify-center bg-violet-500 text-white font-semibold text-xs"
+                          >
+                            {cartItems?.length}
+                          </div>
+                        ) : null}
+                      </div>
                     </Link>
                   </div>
                   <div className="py-6">

@@ -17,7 +17,7 @@ const SuccessPayment = () => {
           You have successfully <br />
           make the order
         </div>
-        <p className="mt-2 w-3/5 text-center text-gray-500 leading-7">
+        <p className="mt-2 lg:w-3/5 w-full text-center text-gray-500 leading-7">
           An email has been sent to your registered email address for
           confirmation. Please check your inbox, including the spam folder, to
           locate the message. If you have any questions or need assistance,
