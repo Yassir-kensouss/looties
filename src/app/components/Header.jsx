@@ -36,11 +36,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
-
 const Header = () => {
   const { cartItems, settings } = useContext(AppContext);
 
@@ -284,6 +279,7 @@ const Header = () => {
                             </div>
                             <div className="flex-auto">
                               <a
+                                onClick={() => setMobileMenuOpen(false)}
                                 href={item.href}
                                 className="block font-semibold text-gray-900"
                               >
@@ -310,6 +306,7 @@ const Header = () => {
                             </div>
                             <div className="flex-auto">
                               <Link
+                                onClick={() => setMobileMenuOpen(false)}
                                 href={`/products?category=${category.name}`}
                                 className="block font-semibold text-gray-900"
                               >
@@ -327,24 +324,28 @@ const Header = () => {
                   )}
                 </Disclosure>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Most wanted
                 </Link>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   New arrivals
                 </Link>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Brands
                 </Link>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href={`/cart?path=${encodeURIComponent(pathname)}`}
                   className="relative flex items-center gap-4 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   aria-label="shopping cart"

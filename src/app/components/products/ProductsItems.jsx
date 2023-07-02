@@ -5,8 +5,11 @@ import Pagination from "../Pagination";
 import { fetchProductsByFilter } from "@/services/products";
 import { AppContext } from "@/app/layout";
 import { PRODUCTS_LIMIT } from "@/utils/constants";
+import { useSearchParams } from "next/navigation";
 
 const ProductsItems = ({ total, setTotal }) => {
+  const searchParams = useSearchParams();
+
   const [products, setProducts] = useState([]);
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -28,11 +31,12 @@ const ProductsItems = ({ total, setTotal }) => {
   };
 
   const { filters } = useContext(AppContext);
+  const search = searchParams.get("search");
 
   useEffect(() => {
     setLoading(true);
-    getProducts(filters, currentPage);
-  }, [filters, currentPage]);
+    getProducts({ ...filters, search }, currentPage);
+  }, [filters, currentPage, search]);
 
   return (
     <>
