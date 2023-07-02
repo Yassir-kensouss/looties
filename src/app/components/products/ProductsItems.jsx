@@ -55,7 +55,7 @@ const ProductsItems = ({ total, setTotal }) => {
                 price={product.price}
                 oldPrice={product.oldPrice}
                 width="270px"
-                height="300px"
+                height="h-72"
                 nameSize="text-md"
                 priceSize="text-md"
                 oldPriceSize="text-sm"

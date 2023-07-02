@@ -11,6 +11,10 @@ const SearchInput = () => {
   const handleKeyPress = e => {
     if (e.keyCode === 13) {
       router.push(`/products?search=${e.target.value}`);
+      setFilters({
+        ...filters,
+        search: e.target.value,
+      });
     }
   };
 

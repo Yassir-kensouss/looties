@@ -14,8 +14,7 @@ const ProductCard = props => {
     price,
     oldPrice,
     preview,
-    width = "350px",
-    height = "400px",
+    height,
     addToCartBtnMargin = "lg:mr-0",
     nameSize = "text-lg",
     priceSize = "text-2xl",
@@ -38,11 +37,10 @@ const ProductCard = props => {
     >
       <div
         className="relative"
-        style={{ width, height }}
         onMouseEnter={() => setShowVariant(true)}
         onMouseLeave={() => setShowVariant(false)}
       >
-        <div style={{ width, height }} className="relative">
+        <div className={`relative w-full h-96 lg:${height}`}>
           <Image
             src={photo}
             fill

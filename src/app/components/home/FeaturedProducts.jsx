@@ -99,7 +99,7 @@ const FeaturedProducts = () => {
                     oldPrice={product.oldPrice}
                     product={product}
                     width="350px"
-                    height="400px"
+                    height="h-96"
                     addToCartBtnMargin="lg:mr-4"
                   />
                 </SwiperSlide>
