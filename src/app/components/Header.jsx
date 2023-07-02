@@ -76,14 +76,11 @@ const Header = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <Image
+          <a href="/" className="relative -m-1.5 p-1.5">
+            <img
               alt={settings.websiteTitle}
               className="h-8 w-auto"
               src={settings.brand}
-              width="40"
-              height="40"
             />
           </a>
         </div>
@@ -222,170 +219,186 @@ const Header = () => {
           <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
       </nav>
-      <Dialog
-        as="div"
-        className="lg:hidden"
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-      >
-        <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </a>
-            <button
-              type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="divide-y divide-gray-500/10">
-              <SearchInput />
-              <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
-                  {({ open }) => (
-                    <>
-                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        Product
-                        <ChevronDownIcon
-                          className={classNames(
-                            open ? "rotate-180" : "",
-                            "h-5 w-5 flex-none"
-                          )}
-                          aria-hidden="true"
-                        />
-                      </Disclosure.Button>
-                      <Disclosure.Panel className="mt-2 space-y-2">
-                        {products.map(item => (
-                          <div
-                            key={item.name}
-                            className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                          >
-                            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                              <item.icon
-                                className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                                aria-hidden="true"
-                              />
-                            </div>
-                            <div className="flex-auto">
-                              <a
-                                onClick={() => setMobileMenuOpen(false)}
-                                href={item.href}
-                                className="block font-semibold text-gray-900"
+      <Transition appear show={mobileMenuOpen} as={Fragment}>
+        <Dialog
+          as="div"
+          className="lg:hidden"
+          open={mobileMenuOpen}
+          onClose={setMobileMenuOpen}
+        >
+          <div className="fixed inset-0 z-10" />
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+              <div className="flex items-center justify-between">
+                <a href="#" className="-m-1.5 p-1.5">
+                  <span className="sr-only">Your Company</span>
+                  <img
+                    className="h-8 w-auto"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                    alt=""
+                  />
+                </a>
+                <button
+                  type="button"
+                  className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="sr-only">Close menu</span>
+                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+              <div className="mt-6 flow-root">
+                <div className="divide-y divide-gray-500/10 pt-8">
+                  <SearchInput setMobileMenuOpen={setMobileMenuOpen} />
+                  <div className="space-y-2 py-6">
+                    <Disclosure as="div" className="-mx-3">
+                      {({ open }) => (
+                        <>
+                          <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                            Product
+                            <ChevronDownIcon
+                              className={classNames(
+                                open ? "rotate-180" : "",
+                                "h-5 w-5 flex-none"
+                              )}
+                              aria-hidden="true"
+                            />
+                          </Disclosure.Button>
+                          <Disclosure.Panel className="mt-2 space-y-2">
+                            {products.map(item => (
+                              <div
+                                key={item.name}
+                                className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                               >
-                                {item.name}
-                                <span className="absolute inset-0" />
-                              </a>
-                              <p className="mt-1 text-gray-600">
-                                {item.description}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                        {categories.map(category => (
-                          <div
-                            key={category.label}
-                            className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
-                          >
-                            <div className="relative flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                              <Image
-                                fill
-                                src={category.image}
-                                className="block w-full h-full object-cover rounded-md"
-                              />
-                            </div>
-                            <div className="flex-auto">
-                              <Link
-                                onClick={() => setMobileMenuOpen(false)}
-                                href={`/products?category=${category.name}`}
-                                className="block font-semibold text-gray-900"
+                                <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                  <item.icon
+                                    className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                                    aria-hidden="true"
+                                  />
+                                </div>
+                                <div className="flex-auto">
+                                  <a
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    href={item.href}
+                                    className="block font-semibold text-gray-900"
+                                  >
+                                    {item.name}
+                                    <span className="absolute inset-0" />
+                                  </a>
+                                  <p className="mt-1 text-gray-600">
+                                    {item.description}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                            {categories.map(category => (
+                              <div
+                                key={category.label}
+                                className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                               >
-                                {category.name}
-                                <span className="absolute inset-0" />
-                              </Link>
-                              <p className="mt-1 text-gray-600">
-                                Browse our latest products
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </Disclosure.Panel>
-                    </>
-                  )}
-                </Disclosure>
-                <Link
-                  onClick={() => setMobileMenuOpen(false)}
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Most wanted
-                </Link>
-                <Link
-                  onClick={() => setMobileMenuOpen(false)}
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  New arrivals
-                </Link>
-                <Link
-                  onClick={() => setMobileMenuOpen(false)}
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Brands
-                </Link>
-                <Link
-                  onClick={() => setMobileMenuOpen(false)}
-                  href={`/cart?path=${encodeURIComponent(pathname)}`}
-                  className="relative flex items-center gap-4 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  aria-label="shopping cart"
-                >
-                  {cartItems?.length > 0 ? (
-                    <div
-                      aria-label="shopping cart badge"
-                      className="absolute -top-1 -right-1 rounded-lg w-5 h-5 flex items-center justify-center bg-violet-500 text-white font-semibold text-xs"
+                                <div className="relative flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                  <Image
+                                    fill
+                                    src={category.image}
+                                    className="block w-full h-full object-cover rounded-md"
+                                  />
+                                </div>
+                                <div className="flex-auto">
+                                  <Link
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    href={`/products?category=${category.name}`}
+                                    className="block font-semibold text-gray-900"
+                                  >
+                                    {category.name}
+                                    <span className="absolute inset-0" />
+                                  </Link>
+                                  <p className="mt-1 text-gray-600">
+                                    Browse our latest products
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                    <Link
+                      onClick={() => setMobileMenuOpen(false)}
+                      href="#"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                     >
-                      {cartItems?.length}
-                    </div>
-                  ) : null}
-                  <ShoppingCartIcon width={20} height={20} aria-hidden="true" />
-                  Cart
-                </Link>
-              </div>
-              <div className="py-6">
-                {isAuthenticated() ? (
-                  <div
-                    onClick={() => refetch()}
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log out
+                      Most wanted
+                    </Link>
+                    <Link
+                      onClick={() => setMobileMenuOpen(false)}
+                      href="#"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      New arrivals
+                    </Link>
+                    <Link
+                      onClick={() => setMobileMenuOpen(false)}
+                      href="#"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Brands
+                    </Link>
+                    <Link
+                      onClick={() => setMobileMenuOpen(false)}
+                      href={`/cart?path=${encodeURIComponent(pathname)}`}
+                      className="relative flex items-center gap-4 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      aria-label="shopping cart"
+                    >
+                      {cartItems?.length > 0 ? (
+                        <div
+                          aria-label="shopping cart badge"
+                          className="absolute -top-1 -right-1 rounded-lg w-5 h-5 flex items-center justify-center bg-violet-500 text-white font-semibold text-xs"
+                        >
+                          {cartItems?.length}
+                        </div>
+                      ) : null}
+                      <ShoppingCartIcon
+                        width={20}
+                        height={20}
+                        aria-hidden="true"
+                      />
+                      Cart
+                    </Link>
                   </div>
-                ) : (
-                  <button
-                    onClick={() => setIsOpen(true)}
-                    className="-mx-3 flex items-center gap-4 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    aria-label="authentication dialog"
-                  >
-                    <UserIcon width={20} height={20} aria-hidden="true" />
-                    Sign In
-                  </button>
-                )}
-                <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
+                  <div className="py-6">
+                    {isAuthenticated() ? (
+                      <div
+                        onClick={() => refetch()}
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Log out
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setIsOpen(true)}
+                        className="-mx-3 flex items-center gap-4 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                        aria-label="authentication dialog"
+                      >
+                        <UserIcon width={20} height={20} aria-hidden="true" />
+                        Sign In
+                      </button>
+                    )}
+                    <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </Dialog.Panel>
-      </Dialog>
+            </Dialog.Panel>
+          </Transition.Child>
+        </Dialog>
+      </Transition>
     </header>
   );
 };

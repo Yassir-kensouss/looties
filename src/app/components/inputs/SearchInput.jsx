@@ -3,13 +3,14 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 
-const SearchInput = () => {
+const SearchInput = ({ setMobileMenuOpen }) => {
   const router = useRouter();
 
   const { filters, setFilters } = useContext(AppContext);
 
   const handleKeyPress = e => {
     if (e.keyCode === 13) {
+      setMobileMenuOpen(false);
       router.push(`/products?search=${e.target.value}`);
       setFilters({
         ...filters,

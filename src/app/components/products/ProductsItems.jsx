@@ -6,6 +6,7 @@ import { fetchProductsByFilter } from "@/services/products";
 import { AppContext } from "@/app/layout";
 import { PRODUCTS_LIMIT } from "@/utils/constants";
 import { useSearchParams } from "next/navigation";
+import NoProducts from "./NoProducts";
 
 const ProductsItems = ({ total, setTotal }) => {
   const searchParams = useSearchParams();
@@ -38,10 +39,14 @@ const ProductsItems = ({ total, setTotal }) => {
     getProducts({ ...filters, search }, currentPage);
   }, [filters, currentPage, search]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      {loading ? (
-        <div>loading...</div>
+      {!products || products.length === 0 ? (
+        <NoProducts classnames="mt-10" />
       ) : (
         <>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-11 mt-6">
