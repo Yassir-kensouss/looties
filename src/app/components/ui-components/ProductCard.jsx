@@ -68,7 +68,12 @@ const ProductCard = props => {
         ) : null}
         {
           <Transition
-            show={showVariant && Object.keys(product.variants).length > 0}
+            show={
+              (showVariant &&
+                product?.variants &&
+                Object.keys(product.variants).length > 0) ||
+              false
+            }
             enter="transition-opacity duration-500"
             enterFrom="opacity-0"
             enterTo="opacity-100"
