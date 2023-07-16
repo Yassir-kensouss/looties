@@ -1,3 +1,3 @@
-const API_URL = "http://localhost:8000/api";
+const API_URL = "https://online-shop-backend.up.railway.app/api";
 
 export { API_URL };
