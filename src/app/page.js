@@ -7,10 +7,6 @@ import Categories from "./components/home/Categories";
 import CallToAction from "./components/home/CallToAction";
 import Subscribe from "./components/home/Subscribe";
 
-export const metadata = {
-  title: "Home",
-};
-
 export default function Home() {
   return (
     <main className="mx-auto gap-5 max-w-7xl p-6 lg:px-8">
