@@ -49,7 +49,6 @@ const Checkout = () => {
   const [country, setCountry] = useState(countries[0]);
 
   const initialValues = {
-    country: country,
     full_name: "",
     email: "",
     email_confirmation: "",
@@ -81,6 +80,7 @@ const Checkout = () => {
       ...checkoutData,
       ...values,
       shipping,
+      country: country,
     });
     router.push("/payment");
     setSubmitting(false);
