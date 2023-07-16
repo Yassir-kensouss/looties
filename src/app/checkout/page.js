@@ -88,7 +88,7 @@ const Checkout = () => {
 
   return (
     <main className="mx-auto max-w-7xl p-6 lg:px-8">
-      {/* <BreadCrumbs crumbs={crumbs} />
+      <BreadCrumbs crumbs={crumbs} />
       {isAuthenticated() ? (
         <Formik
           initialValues={initialValues}
@@ -137,7 +137,7 @@ const Checkout = () => {
           </p>
           <AuthContainer isOpen={isOpen} setIsOpen={setIsOpen} />
         </>
-      )} */}
+      )}
     </main>
   );
 };
