@@ -44,12 +44,18 @@ const Header = () => {
   const [categories, setCategories] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useQuery("fetch-categories", async () => {
-    const response = await fetchCategories();
-    const data = await response.data.categories;
-    setCategories(data);
-    return data;
-  });
+  useQuery(
+    "fetch-categories",
+    async () => {
+      const response = await fetchCategories();
+      const data = await response.data.categories;
+      setCategories(data);
+      return data;
+    },
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const { refetch, isLoading } = useQuery(
     "logout",
