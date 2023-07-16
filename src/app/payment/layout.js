@@ -5,7 +5,7 @@ import Loading from "./loading";
 import { isAuthenticated } from "@/utils/helpers";
 import AuthContainer from "@/components/Auth/AuthContainer";
 
-const layout = () => {
+const Layout = () => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <main className="mx-auto max-w-7xl p-6 lg:px-8">
@@ -25,4 +25,4 @@ const layout = () => {
   );
 };
 
-export default layout;
+export default Layout;

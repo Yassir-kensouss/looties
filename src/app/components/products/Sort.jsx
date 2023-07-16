@@ -31,8 +31,9 @@ const Sort = () => {
             tabIndex={0}
             className="dropdown-content menu p-2 shadow bg-base-100 rounded-md w-32"
           >
-            {list.map(el => (
+            {list.map((el, index) => (
               <li
+                key={index}
                 className="capitalize hover:bg-zinc-100 text-zinc-800 px-2 py-1 cursor-pointer"
                 onClick={() => handleSortChange(el)}
               >

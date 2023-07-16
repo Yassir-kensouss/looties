@@ -55,7 +55,7 @@ const SignIn = props => {
               />
             </label>
             <p className="text-sm mt-4 text-zinc-700 cursor-pointer hover:text-zinc-500 active:text-zinc-700">
-              You don't have an account -{" "}
+              You don&apos;t have an account -{" "}
               <span className="font-semibold" onClick={handleAuthType}>
                 Sign Up now
               </span>

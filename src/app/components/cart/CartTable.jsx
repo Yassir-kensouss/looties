@@ -49,8 +49,9 @@ const CartTable = () => {
           </div>
         </div>
         {items && items.length > 0 ? (
-          items.map(item => (
+          items.map((item, index) => (
             <CartTableItems
+              key={index}
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}
               item={item}

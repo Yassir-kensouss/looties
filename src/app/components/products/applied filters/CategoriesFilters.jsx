@@ -18,8 +18,11 @@ const CategoriesFilters = () => {
     <>
       <div className="flex items-center gap-2 flex-wrap">
         {filters.category.length > 0
-          ? filters.category.map(el => (
-              <div className="flex items-center gap-2 p-2 text-sm capitalize font-semibold text-zinc-600 border border-zinc-300 rounded-2xl w-fit">
+          ? filters.category.map((el, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 p-2 text-sm capitalize font-semibold text-zinc-600 border border-zinc-300 rounded-2xl w-fit"
+              >
                 <span>{el}</span>
                 <button
                   aria-label="remove applied filter"

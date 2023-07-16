@@ -19,8 +19,9 @@ const ProductReviews = ({ reviews = [], isLoading }) => {
             <ReviewsSkeleton className="mt-8" />
           ) : (
             <div className="grid lg:grid-cols-2 grid-cols-1 gap-12 mt-8">
-              {reviews.map(review => (
+              {reviews.map((review, index) => (
                 <ProductReview
+                  key={index}
                   rating={review.rating}
                   review={review.review}
                   username={review.username}

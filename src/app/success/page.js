@@ -21,8 +21,8 @@ const SuccessPayment = () => {
           An email has been sent to your registered email address for
           confirmation. Please check your inbox, including the spam folder, to
           locate the message. If you have any questions or need assistance,
-          please don't hesitate to contact our support team. They will be happy
-          to help you.
+          please don&apos;t hesitate to contact our support team. They will be
+          happy to help you.
         </p>
         <Link
           href="/products"
