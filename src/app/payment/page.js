@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import PaymentShippingDetails from "@/components/Payment/PaymentShippingDetails";
-import PaymentForm from "@/components/Payment/paymentForm";
+import PaymentForm from "@/components/Payment/PaymentForm";
 import { getBraintreeToken } from "@/services/payment";
 import { isAuthenticated } from "@/utils/helpers";
 
