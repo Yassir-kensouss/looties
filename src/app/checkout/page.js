@@ -1,90 +1,90 @@
 "use client";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-// import BreadCrumbs from "../components/ui-components/BreadCrumbs";
-// import CheckoutPreview from "../components/checkout/CheckoutPreview";
-// import { Form, Formik } from "formik";
-// import * as Yup from "yup";
-// import ShippingType from "../components/checkout/ShippingType";
-// import CustomCombobox from "../components/ui-components/Combobox";
-// import countryList from "react-select-country-list";
-// import CheckoutPersonalDetails from "../components/checkout/CheckoutPersonalDetails";
-// import { SHIPPING_PLANS } from "@/utils/constants";
-// import { useRouter } from "next/navigation";
-// import { AppContext } from "../layout";
-// import { isAuthenticated } from "@/utils/helpers";
-// import AuthContainer from "@/components/Auth/AuthContainer";
+import BreadCrumbs from "../components/ui-components/BreadCrumbs";
+import CheckoutPreview from "../components/checkout/CheckoutPreview";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
+import ShippingType from "../components/checkout/ShippingType";
+import CustomCombobox from "../components/ui-components/Combobox";
+import countryList from "react-select-country-list";
+import CheckoutPersonalDetails from "../components/checkout/CheckoutPersonalDetails";
+import { SHIPPING_PLANS } from "@/utils/constants";
+import { useRouter } from "next/navigation";
+import { AppContext } from "../layout";
+import { isAuthenticated } from "@/utils/helpers";
+import AuthContainer from "@/components/Auth/AuthContainer";
 
-// const crumbs = [
-//   { link: "/", label: "Home" },
-//   { link: "/cart", label: "Cart" },
-//   { link: "/checkout", label: "Checkout" },
-// ];
+const crumbs = [
+  { link: "/", label: "Home" },
+  { link: "/cart", label: "Cart" },
+  { link: "/checkout", label: "Checkout" },
+];
 
 const Checkout = () => {
-  //   const router = useRouter();
+  const router = useRouter();
 
-  //   useEffect(() => {
-  //     !isAuthenticated() ? router.push("/") : null;
-  //   }, []);
+  useEffect(() => {
+    !isAuthenticated() ? router.push("/") : null;
+  }, []);
 
-  //   const [shipping, setShipping] = useState(SHIPPING_PLANS[0]);
-  //   const [isOpen, setIsOpen] = useState(true);
+  const [shipping, setShipping] = useState(SHIPPING_PLANS[0]);
+  const [isOpen, setIsOpen] = useState(true);
 
-  //   const { setCheckoutData, checkoutData } = useContext(AppContext);
+  const { setCheckoutData, checkoutData } = useContext(AppContext);
 
-  //   const countries = useMemo(
-  //     () =>
-  //       countryList()
-  //         .getData()
-  //         .map((country, index) => {
-  //           return {
-  //             ...country,
-  //             name: country.label,
-  //             unavailable: false,
-  //             index: index,
-  //           };
-  //         }),
-  //     []
-  //   );
-  //   const [country, setCountry] = useState(countries[0]);
+  const countries = useMemo(
+    () =>
+      countryList()
+        .getData()
+        .map((country, index) => {
+          return {
+            ...country,
+            name: country.label,
+            unavailable: false,
+            index: index,
+          };
+        }),
+    []
+  );
+  const [country, setCountry] = useState(countries[0]);
 
-  //   const initialValues = {
-  //     country: country,
-  //     full_name: "",
-  //     email: "",
-  //     email_confirmation: "",
-  //     phone: "",
-  //     address: "",
-  //     city: "",
-  //     state: "",
-  //     code_postal: "",
-  //   };
+  const initialValues = {
+    country: country,
+    full_name: "",
+    email: "",
+    email_confirmation: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    code_postal: "",
+  };
 
-  //   const CheckoutSchema = Yup.object().shape({
-  //     full_name: Yup.string()
-  //       .min(2, "Too Short!")
-  //       .max(50, "Too Long!")
-  //       .required("Required"),
-  //     email: Yup.string().email().required("Required"),
-  //     email_confirmation: Yup.string().email().required("Required"),
-  //     address: Yup.string()
-  //       .min(2, "Address is too Short!")
-  //       .max(1000, "Address is too Long!")
-  //       .required("Address is required"),
-  //     city: Yup.string().required("City is required"),
-  //     state: Yup.string().required("State is required"),
-  //     code_postal: Yup.string().required("Code postal is required"),
-  //   });
+  const CheckoutSchema = Yup.object().shape({
+    full_name: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    email: Yup.string().email().required("Required"),
+    email_confirmation: Yup.string().email().required("Required"),
+    address: Yup.string()
+      .min(2, "Address is too Short!")
+      .max(1000, "Address is too Long!")
+      .required("Address is required"),
+    city: Yup.string().required("City is required"),
+    state: Yup.string().required("State is required"),
+    code_postal: Yup.string().required("Code postal is required"),
+  });
 
-  //   const onSubmit = (values, { setSubmitting }) => {
-  //     setCheckoutData({
-  //       ...checkoutData,
-  //       ...values,
-  //       shipping,
-  //     });
-  //     router.push("/payment");
-  //     setSubmitting(false);
-  //   };
+  const onSubmit = (values, { setSubmitting }) => {
+    setCheckoutData({
+      ...checkoutData,
+      ...values,
+      shipping,
+    });
+    router.push("/payment");
+    setSubmitting(false);
+  };
 
   return (
     <main className="mx-auto max-w-7xl p-6 lg:px-8">
