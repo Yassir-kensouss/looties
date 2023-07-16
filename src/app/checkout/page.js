@@ -46,7 +46,7 @@ const Checkout = () => {
         }),
     []
   );
-  const [country, setCountry] = useState(countries[0]);
+  const [country, setCountry] = useState({});
 
   const initialValues = {
     country: country,
